@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "s3.inventory";
+option java_outer_classname = "InventoryImpl";
+package inventory;
+
+/* Service Inventory management */
+
+// Interface exported by the server.
+service Inventory   {
+	rpc checkInventoryQuantity (InventoryQtyRequest) returns (InventoryQtyResponse) {}
+
+	rpc order (stream OrderRequest) returns (stream OrderResponse) {}
+
+	rpc orderHistory (OrderHisRequest) returns (OrderHisResponse) {}
+}
+
+
+message InventoryQtyRequest {
+
+}
+
+message InventoryQtyResponse {
+
+}
+
+message OrderRequest {
+
+}
+
+message OrderResponse {
+
+}
+
+message OrderHisRequest {
+	string startDate = 1;
+	string endDate = 2;
+}
+
+message OrderHisResponse {
+
+}

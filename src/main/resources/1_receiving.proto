@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "s1.receiving";
+option java_outer_classname = "ReceivingImpl";
+package receiving;
+
+/* Service Receiving management */
+
+// Interface exported by the server.
+service Receiving {
+	rpc checkReceivedQuantity (stream ReceivedQtyRequest) returns (ReceivedQtyResponse) {}
+
+	rpc setLocation (stream SetLocRequest) returns (stream SetLocResponse) {}
+
+	rpc checkLocationAvailability (LocationAvailMessage) returns (LocationAvailResponse) {}
+}
+
+
+message ReceivedQtyRequest {
+
+}
+
+message ReceivedQtyResponse {
+
+}
+
+message SetLocRequest {
+
+}
+
+message SetLocResponse {
+
+}
+
+message LocationAvailMessage {
+
+}
+
+message LocationAvailResponse {
+
+}

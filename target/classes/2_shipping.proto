@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "s2.shipping";
+option java_outer_classname = "ShippingImpl";
+package shipping;
+
+/* Service Shipping management */
+
+// Interface exported by the server.
+service Shipping  {
+	rpc checkShippingQuantity (stream ShippingQtyRequest) returns (ShippingQtyResponse) {}
+
+	rpc updateLocation (stream updateLocRequest) returns (stream updateLocResponse) {}
+}
+
+
+message ShippingQtyRequest {
+
+}
+
+message ShippingQtyResponse {
+
+}
+
+message updateLocRequest {
+
+}
+
+message updateLocResponse {
+
+}
