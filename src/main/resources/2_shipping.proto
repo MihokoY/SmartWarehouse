@@ -5,28 +5,30 @@ option java_package = "s2.shipping";
 option java_outer_classname = "ShippingImpl";
 package shipping;
 
-/* Service Shipping management */
+/* Service2 Shipping management */
 
-// Interface exported by the server.
+// Service Definition
 service Shipping  {
 	rpc checkShippingQuantity (stream ShippingQtyRequest) returns (ShippingQtyResponse) {}
 
 	rpc updateLocation (stream updateLocRequest) returns (stream updateLocResponse) {}
 }
 
-
+// Define the messages
 message ShippingQtyRequest {
-
+	string productNo = 1;
+	int32 shippingQty = 2;
 }
 
 message ShippingQtyResponse {
-
+	string message = 1;
 }
 
 message updateLocRequest {
-
+	string productIndivNo = 1;
 }
 
 message updateLocResponse {
-
+	string locationNo = 1;
+	int32 availNum = 2;
 }

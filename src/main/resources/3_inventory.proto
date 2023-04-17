@@ -5,9 +5,9 @@ option java_package = "s3.inventory";
 option java_outer_classname = "InventoryImpl";
 package inventory;
 
-/* Service Inventory management */
+/* Service3 Inventory management */
 
-// Interface exported by the server.
+// Service Definition
 service Inventory   {
 	rpc checkInventoryQuantity (InventoryQtyRequest) returns (InventoryQtyResponse) {}
 
@@ -16,21 +16,24 @@ service Inventory   {
 	rpc orderHistory (OrderHisRequest) returns (OrderHisResponse) {}
 }
 
-
+// Define the messages
 message InventoryQtyRequest {
-
+	int32 totalQty = 1;
 }
 
 message InventoryQtyResponse {
-
+	string productNo = 1;
 }
 
 message OrderRequest {
-
+	string productNo = 1;
+	int32 orderQty = 2;
 }
 
 message OrderResponse {
-
+	string productNo = 1;
+	int32 orderQty = 2;
+	int32 afterQty = 3;
 }
 
 message OrderHisRequest {
@@ -39,5 +42,7 @@ message OrderHisRequest {
 }
 
 message OrderHisResponse {
-
+	string productNo = 1;
+	int32 totalQty = 2;
+	float totalPrice = 3;
 }

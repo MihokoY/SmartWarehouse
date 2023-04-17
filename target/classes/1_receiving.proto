@@ -5,38 +5,41 @@ option java_package = "s1.receiving";
 option java_outer_classname = "ReceivingImpl";
 package receiving;
 
-/* Service Receiving management */
+/* Service1 Receiving management */
 
-// Interface exported by the server.
+// Service Definition
 service Receiving {
 	rpc checkReceivedQuantity (stream ReceivedQtyRequest) returns (ReceivedQtyResponse) {}
 
 	rpc setLocation (stream SetLocRequest) returns (stream SetLocResponse) {}
 
-	rpc checkLocationAvailability (LocationAvailMessage) returns (LocationAvailResponse) {}
+	rpc checkLocationAvailability (LocationAvailRequest) returns (LocationAvailResponse) {}
 }
 
-
+// Define the messages
 message ReceivedQtyRequest {
-
+	string productNo = 1;
+	int32 receivedQty = 2;
 }
 
 message ReceivedQtyResponse {
-
+	string message = 1;
 }
 
 message SetLocRequest {
-
+	string productNo = 1;
+	string productIndivNo = 2;
 }
 
 message SetLocResponse {
-
+	string productIndivNo = 1;
+	string locationNo = 2;
 }
 
-message LocationAvailMessage {
-
+message LocationAvailRequest {
+	string locationNo = 1;
 }
 
 message LocationAvailResponse {
-
+	int32 availNum = 1;
 }
