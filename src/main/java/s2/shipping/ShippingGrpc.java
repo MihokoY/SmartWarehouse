@@ -62,30 +62,30 @@ public final class ShippingGrpc {
      return getCheckShippingQuantityMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<s2.shipping.updateLocRequest,
-      s2.shipping.updateLocResponse> getUpdateLocationMethod;
+  private static volatile io.grpc.MethodDescriptor<s2.shipping.UpdateLocRequest,
+      s2.shipping.UpdateLocResponse> getUpdateLocationMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "updateLocation",
-      requestType = s2.shipping.updateLocRequest.class,
-      responseType = s2.shipping.updateLocResponse.class,
+      requestType = s2.shipping.UpdateLocRequest.class,
+      responseType = s2.shipping.UpdateLocResponse.class,
       methodType = io.grpc.MethodDescriptor.MethodType.BIDI_STREAMING)
-  public static io.grpc.MethodDescriptor<s2.shipping.updateLocRequest,
-      s2.shipping.updateLocResponse> getUpdateLocationMethod() {
-    io.grpc.MethodDescriptor<s2.shipping.updateLocRequest, s2.shipping.updateLocResponse> getUpdateLocationMethod;
+  public static io.grpc.MethodDescriptor<s2.shipping.UpdateLocRequest,
+      s2.shipping.UpdateLocResponse> getUpdateLocationMethod() {
+    io.grpc.MethodDescriptor<s2.shipping.UpdateLocRequest, s2.shipping.UpdateLocResponse> getUpdateLocationMethod;
     if ((getUpdateLocationMethod = ShippingGrpc.getUpdateLocationMethod) == null) {
       synchronized (ShippingGrpc.class) {
         if ((getUpdateLocationMethod = ShippingGrpc.getUpdateLocationMethod) == null) {
           ShippingGrpc.getUpdateLocationMethod = getUpdateLocationMethod = 
-              io.grpc.MethodDescriptor.<s2.shipping.updateLocRequest, s2.shipping.updateLocResponse>newBuilder()
+              io.grpc.MethodDescriptor.<s2.shipping.UpdateLocRequest, s2.shipping.UpdateLocResponse>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.BIDI_STREAMING)
               .setFullMethodName(generateFullMethodName(
                   "shipping.Shipping", "updateLocation"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  s2.shipping.updateLocRequest.getDefaultInstance()))
+                  s2.shipping.UpdateLocRequest.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  s2.shipping.updateLocResponse.getDefaultInstance()))
+                  s2.shipping.UpdateLocResponse.getDefaultInstance()))
                   .setSchemaDescriptor(new ShippingMethodDescriptorSupplier("updateLocation"))
                   .build();
           }
@@ -133,8 +133,8 @@ public final class ShippingGrpc {
 
     /**
      */
-    public io.grpc.stub.StreamObserver<s2.shipping.updateLocRequest> updateLocation(
-        io.grpc.stub.StreamObserver<s2.shipping.updateLocResponse> responseObserver) {
+    public io.grpc.stub.StreamObserver<s2.shipping.UpdateLocRequest> updateLocation(
+        io.grpc.stub.StreamObserver<s2.shipping.UpdateLocResponse> responseObserver) {
       return asyncUnimplementedStreamingCall(getUpdateLocationMethod(), responseObserver);
     }
 
@@ -151,8 +151,8 @@ public final class ShippingGrpc {
             getUpdateLocationMethod(),
             asyncBidiStreamingCall(
               new MethodHandlers<
-                s2.shipping.updateLocRequest,
-                s2.shipping.updateLocResponse>(
+                s2.shipping.UpdateLocRequest,
+                s2.shipping.UpdateLocResponse>(
                   this, METHODID_UPDATE_LOCATION)))
           .build();
     }
@@ -189,8 +189,8 @@ public final class ShippingGrpc {
 
     /**
      */
-    public io.grpc.stub.StreamObserver<s2.shipping.updateLocRequest> updateLocation(
-        io.grpc.stub.StreamObserver<s2.shipping.updateLocResponse> responseObserver) {
+    public io.grpc.stub.StreamObserver<s2.shipping.UpdateLocRequest> updateLocation(
+        io.grpc.stub.StreamObserver<s2.shipping.UpdateLocResponse> responseObserver) {
       return asyncBidiStreamingCall(
           getChannel().newCall(getUpdateLocationMethod(), getCallOptions()), responseObserver);
     }
@@ -275,7 +275,7 @@ public final class ShippingGrpc {
               (io.grpc.stub.StreamObserver<s2.shipping.ShippingQtyResponse>) responseObserver);
         case METHODID_UPDATE_LOCATION:
           return (io.grpc.stub.StreamObserver<Req>) serviceImpl.updateLocation(
-              (io.grpc.stub.StreamObserver<s2.shipping.updateLocResponse>) responseObserver);
+              (io.grpc.stub.StreamObserver<s2.shipping.UpdateLocResponse>) responseObserver);
         default:
           throw new AssertionError();
       }

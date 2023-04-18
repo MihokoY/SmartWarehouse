@@ -25,14 +25,15 @@ public class ReceivingClient{
 		asyncStub = ReceivingGrpc.newStub(channel);
 		
 		try {
-		checkReceivedQuantity();
+			checkReceivedQuantity();
 		
-		setLocation();
+			setLocation();
 		
-		checkLocationAvailability();
+			checkLocationAvailability();
 		
 		}catch (StatusRuntimeException e) {
 			e.getStatus();
+			
 		}finally{
 			try {
 				channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
@@ -100,7 +101,6 @@ public class ReceivingClient{
 	
 	
 	public static void setLocation() {
-
 
 		StreamObserver<SetLocResponse> responseObserver = new StreamObserver<SetLocResponse>() {
 

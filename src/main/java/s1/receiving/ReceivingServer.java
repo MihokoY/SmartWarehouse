@@ -135,7 +135,7 @@ public class ReceivingServer extends ReceivingImplBase {
 				String indivNo = slr.getProductIndivNo();
 				System.out.println("receiving setLocation method productNo: "+ prdctNo + " individualNo: "+ indivNo);
 				
-				// set the default response value(availNum)
+				// set the default response value(locatNo)
 				String locatNo =  "";
 				
 				// read the csv file
@@ -160,7 +160,9 @@ public class ReceivingServer extends ReceivingImplBase {
 						// get the location No where productNos are the same and available number is greater than 0
 						if(ProductNo.equals(prdctNo) && availableNum > 0) {
 							locatNo = locationNo;
-							// availableNum = availableNum - 1
+							// update LocationAvailability.csv (availableNum += 1)
+							// update LocationList.csv (add this product data)
+							// update InventoryList.csv (totalQty += 1)
 							break;
 						}
 

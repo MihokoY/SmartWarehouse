@@ -4,18 +4,18 @@
 package s2.shipping;
 
 /**
- * Protobuf type {@code shipping.updateLocResponse}
+ * Protobuf type {@code shipping.UpdateLocResponse}
  */
-public  final class updateLocResponse extends
+public  final class UpdateLocResponse extends
     com.google.protobuf.GeneratedMessageV3 implements
-    // @@protoc_insertion_point(message_implements:shipping.updateLocResponse)
-    updateLocResponseOrBuilder {
+    // @@protoc_insertion_point(message_implements:shipping.UpdateLocResponse)
+    UpdateLocResponseOrBuilder {
 private static final long serialVersionUID = 0L;
-  // Use updateLocResponse.newBuilder() to construct.
-  private updateLocResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+  // Use UpdateLocResponse.newBuilder() to construct.
+  private UpdateLocResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
   }
-  private updateLocResponse() {
+  private UpdateLocResponse() {
     locationNo_ = "";
     availNum_ = 0;
   }
@@ -25,7 +25,7 @@ private static final long serialVersionUID = 0L;
   getUnknownFields() {
     return this.unknownFields;
   }
-  private updateLocResponse(
+  private UpdateLocResponse(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
@@ -76,15 +76,15 @@ private static final long serialVersionUID = 0L;
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return s2.shipping.ShippingImpl.internal_static_shipping_updateLocResponse_descriptor;
+    return s2.shipping.ShippingImpl.internal_static_shipping_UpdateLocResponse_descriptor;
   }
 
   @java.lang.Override
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return s2.shipping.ShippingImpl.internal_static_shipping_updateLocResponse_fieldAccessorTable
+    return s2.shipping.ShippingImpl.internal_static_shipping_UpdateLocResponse_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            s2.shipping.updateLocResponse.class, s2.shipping.updateLocResponse.Builder.class);
+            s2.shipping.UpdateLocResponse.class, s2.shipping.UpdateLocResponse.Builder.class);
   }
 
   public static final int LOCATIONNO_FIELD_NUMBER = 1;
@@ -176,10 +176,10 @@ private static final long serialVersionUID = 0L;
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof s2.shipping.updateLocResponse)) {
+    if (!(obj instanceof s2.shipping.UpdateLocResponse)) {
       return super.equals(obj);
     }
-    s2.shipping.updateLocResponse other = (s2.shipping.updateLocResponse) obj;
+    s2.shipping.UpdateLocResponse other = (s2.shipping.UpdateLocResponse) obj;
 
     boolean result = true;
     result = result && getLocationNo()
@@ -206,69 +206,69 @@ private static final long serialVersionUID = 0L;
     return hash;
   }
 
-  public static s2.shipping.updateLocResponse parseFrom(
+  public static s2.shipping.UpdateLocResponse parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static s2.shipping.updateLocResponse parseFrom(
+  public static s2.shipping.UpdateLocResponse parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static s2.shipping.updateLocResponse parseFrom(
+  public static s2.shipping.UpdateLocResponse parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static s2.shipping.updateLocResponse parseFrom(
+  public static s2.shipping.UpdateLocResponse parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static s2.shipping.updateLocResponse parseFrom(byte[] data)
+  public static s2.shipping.UpdateLocResponse parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static s2.shipping.updateLocResponse parseFrom(
+  public static s2.shipping.UpdateLocResponse parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static s2.shipping.updateLocResponse parseFrom(java.io.InputStream input)
+  public static s2.shipping.UpdateLocResponse parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static s2.shipping.updateLocResponse parseFrom(
+  public static s2.shipping.UpdateLocResponse parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static s2.shipping.updateLocResponse parseDelimitedFrom(java.io.InputStream input)
+  public static s2.shipping.UpdateLocResponse parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static s2.shipping.updateLocResponse parseDelimitedFrom(
+  public static s2.shipping.UpdateLocResponse parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static s2.shipping.updateLocResponse parseFrom(
+  public static s2.shipping.UpdateLocResponse parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static s2.shipping.updateLocResponse parseFrom(
+  public static s2.shipping.UpdateLocResponse parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -281,7 +281,7 @@ private static final long serialVersionUID = 0L;
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(s2.shipping.updateLocResponse prototype) {
+  public static Builder newBuilder(s2.shipping.UpdateLocResponse prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
   @java.lang.Override
@@ -297,26 +297,26 @@ private static final long serialVersionUID = 0L;
     return builder;
   }
   /**
-   * Protobuf type {@code shipping.updateLocResponse}
+   * Protobuf type {@code shipping.UpdateLocResponse}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:shipping.updateLocResponse)
-      s2.shipping.updateLocResponseOrBuilder {
+      // @@protoc_insertion_point(builder_implements:shipping.UpdateLocResponse)
+      s2.shipping.UpdateLocResponseOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return s2.shipping.ShippingImpl.internal_static_shipping_updateLocResponse_descriptor;
+      return s2.shipping.ShippingImpl.internal_static_shipping_UpdateLocResponse_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return s2.shipping.ShippingImpl.internal_static_shipping_updateLocResponse_fieldAccessorTable
+      return s2.shipping.ShippingImpl.internal_static_shipping_UpdateLocResponse_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              s2.shipping.updateLocResponse.class, s2.shipping.updateLocResponse.Builder.class);
+              s2.shipping.UpdateLocResponse.class, s2.shipping.UpdateLocResponse.Builder.class);
     }
 
-    // Construct using s2.shipping.updateLocResponse.newBuilder()
+    // Construct using s2.shipping.UpdateLocResponse.newBuilder()
     private Builder() {
       maybeForceBuilderInitialization();
     }
@@ -344,17 +344,17 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return s2.shipping.ShippingImpl.internal_static_shipping_updateLocResponse_descriptor;
+      return s2.shipping.ShippingImpl.internal_static_shipping_UpdateLocResponse_descriptor;
     }
 
     @java.lang.Override
-    public s2.shipping.updateLocResponse getDefaultInstanceForType() {
-      return s2.shipping.updateLocResponse.getDefaultInstance();
+    public s2.shipping.UpdateLocResponse getDefaultInstanceForType() {
+      return s2.shipping.UpdateLocResponse.getDefaultInstance();
     }
 
     @java.lang.Override
-    public s2.shipping.updateLocResponse build() {
-      s2.shipping.updateLocResponse result = buildPartial();
+    public s2.shipping.UpdateLocResponse build() {
+      s2.shipping.UpdateLocResponse result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
@@ -362,8 +362,8 @@ private static final long serialVersionUID = 0L;
     }
 
     @java.lang.Override
-    public s2.shipping.updateLocResponse buildPartial() {
-      s2.shipping.updateLocResponse result = new s2.shipping.updateLocResponse(this);
+    public s2.shipping.UpdateLocResponse buildPartial() {
+      s2.shipping.UpdateLocResponse result = new s2.shipping.UpdateLocResponse(this);
       result.locationNo_ = locationNo_;
       result.availNum_ = availNum_;
       onBuilt();
@@ -404,16 +404,16 @@ private static final long serialVersionUID = 0L;
     }
     @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof s2.shipping.updateLocResponse) {
-        return mergeFrom((s2.shipping.updateLocResponse)other);
+      if (other instanceof s2.shipping.UpdateLocResponse) {
+        return mergeFrom((s2.shipping.UpdateLocResponse)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(s2.shipping.updateLocResponse other) {
-      if (other == s2.shipping.updateLocResponse.getDefaultInstance()) return this;
+    public Builder mergeFrom(s2.shipping.UpdateLocResponse other) {
+      if (other == s2.shipping.UpdateLocResponse.getDefaultInstance()) return this;
       if (!other.getLocationNo().isEmpty()) {
         locationNo_ = other.locationNo_;
         onChanged();
@@ -436,11 +436,11 @@ private static final long serialVersionUID = 0L;
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      s2.shipping.updateLocResponse parsedMessage = null;
+      s2.shipping.UpdateLocResponse parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (s2.shipping.updateLocResponse) e.getUnfinishedMessage();
+        parsedMessage = (s2.shipping.UpdateLocResponse) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -557,41 +557,41 @@ private static final long serialVersionUID = 0L;
     }
 
 
-    // @@protoc_insertion_point(builder_scope:shipping.updateLocResponse)
+    // @@protoc_insertion_point(builder_scope:shipping.UpdateLocResponse)
   }
 
-  // @@protoc_insertion_point(class_scope:shipping.updateLocResponse)
-  private static final s2.shipping.updateLocResponse DEFAULT_INSTANCE;
+  // @@protoc_insertion_point(class_scope:shipping.UpdateLocResponse)
+  private static final s2.shipping.UpdateLocResponse DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new s2.shipping.updateLocResponse();
+    DEFAULT_INSTANCE = new s2.shipping.UpdateLocResponse();
   }
 
-  public static s2.shipping.updateLocResponse getDefaultInstance() {
+  public static s2.shipping.UpdateLocResponse getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<updateLocResponse>
-      PARSER = new com.google.protobuf.AbstractParser<updateLocResponse>() {
+  private static final com.google.protobuf.Parser<UpdateLocResponse>
+      PARSER = new com.google.protobuf.AbstractParser<UpdateLocResponse>() {
     @java.lang.Override
-    public updateLocResponse parsePartialFrom(
+    public UpdateLocResponse parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return new updateLocResponse(input, extensionRegistry);
+      return new UpdateLocResponse(input, extensionRegistry);
     }
   };
 
-  public static com.google.protobuf.Parser<updateLocResponse> parser() {
+  public static com.google.protobuf.Parser<UpdateLocResponse> parser() {
     return PARSER;
   }
 
   @java.lang.Override
-  public com.google.protobuf.Parser<updateLocResponse> getParserForType() {
+  public com.google.protobuf.Parser<UpdateLocResponse> getParserForType() {
     return PARSER;
   }
 
   @java.lang.Override
-  public s2.shipping.updateLocResponse getDefaultInstanceForType() {
+  public s2.shipping.UpdateLocResponse getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

@@ -3,8 +3,8 @@
 
 package s2.shipping;
 
-public interface updateLocResponseOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:shipping.updateLocResponse)
+public interface UpdateLocResponseOrBuilder extends
+    // @@protoc_insertion_point(interface_extends:shipping.UpdateLocResponse)
     com.google.protobuf.MessageOrBuilder {
 
   /**

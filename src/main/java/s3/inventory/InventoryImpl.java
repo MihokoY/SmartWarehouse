@@ -62,14 +62,14 @@ public final class InventoryImpl {
       "5\n\017OrderHisRequest\022\021\n\tstartDate\030\001 \001(\t\022\017\n" +
       "\007endDate\030\002 \001(\t\"K\n\020OrderHisResponse\022\021\n\tpr" +
       "oductNo\030\001 \001(\t\022\020\n\010totalQty\030\002 \001(\005\022\022\n\ntotal" +
-      "Price\030\003 \001(\0022\365\001\n\tInventory\022[\n\026checkInvent" +
+      "Price\030\003 \001(\0022\371\001\n\tInventory\022]\n\026checkInvent" +
       "oryQuantity\022\036.inventory.InventoryQtyRequ" +
-      "est\032\037.inventory.InventoryQtyResponse\"\000\022@" +
-      "\n\005order\022\027.inventory.OrderRequest\032\030.inven" +
-      "tory.OrderResponse\"\000(\0010\001\022I\n\014orderHistory" +
-      "\022\032.inventory.OrderHisRequest\032\033.inventory" +
-      ".OrderHisResponse\"\000B\037\n\014s3.inventoryB\rInv" +
-      "entoryImplP\001b\006proto3"
+      "est\032\037.inventory.InventoryQtyResponse\"\0000\001" +
+      "\022@\n\005order\022\027.inventory.OrderRequest\032\030.inv" +
+      "entory.OrderResponse\"\000(\0010\001\022K\n\014orderHisto" +
+      "ry\022\032.inventory.OrderHisRequest\032\033.invento" +
+      "ry.OrderHisResponse\"\0000\001B\037\n\014s3.inventoryB" +
+      "\rInventoryImplP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

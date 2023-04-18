@@ -9,11 +9,11 @@ package inventory;
 
 // Service Definition
 service Inventory   {
-	rpc checkInventoryQuantity (InventoryQtyRequest) returns (InventoryQtyResponse) {}
+	rpc checkInventoryQuantity (InventoryQtyRequest) returns (stream InventoryQtyResponse) {}
 
 	rpc order (stream OrderRequest) returns (stream OrderResponse) {}
 
-	rpc orderHistory (OrderHisRequest) returns (OrderHisResponse) {}
+	rpc orderHistory (OrderHisRequest) returns (stream OrderHisResponse) {}
 }
 
 // Define the messages

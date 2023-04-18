@@ -25,15 +25,15 @@ public final class ShippingImpl {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_shipping_ShippingQtyResponse_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_shipping_updateLocRequest_descriptor;
+    internal_static_shipping_UpdateLocRequest_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_shipping_updateLocRequest_fieldAccessorTable;
+      internal_static_shipping_UpdateLocRequest_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_shipping_updateLocResponse_descriptor;
+    internal_static_shipping_UpdateLocResponse_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_shipping_updateLocResponse_fieldAccessorTable;
+      internal_static_shipping_UpdateLocResponse_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -46,13 +46,13 @@ public final class ShippingImpl {
       "\n\0202_shipping.proto\022\010shipping\"<\n\022Shipping" +
       "QtyRequest\022\021\n\tproductNo\030\001 \001(\t\022\023\n\013shippin" +
       "gQty\030\002 \001(\005\"&\n\023ShippingQtyResponse\022\017\n\007mes" +
-      "sage\030\001 \001(\t\"*\n\020updateLocRequest\022\026\n\016produc" +
-      "tIndivNo\030\001 \001(\t\"9\n\021updateLocResponse\022\022\n\nl" +
+      "sage\030\001 \001(\t\"*\n\020UpdateLocRequest\022\026\n\016produc" +
+      "tIndivNo\030\001 \001(\t\"9\n\021UpdateLocResponse\022\022\n\nl" +
       "ocationNo\030\001 \001(\t\022\020\n\010availNum\030\002 \001(\0052\265\001\n\010Sh" +
       "ipping\022X\n\025checkShippingQuantity\022\034.shippi" +
       "ng.ShippingQtyRequest\032\035.shipping.Shippin" +
       "gQtyResponse\"\000(\001\022O\n\016updateLocation\022\032.shi" +
-      "pping.updateLocRequest\032\033.shipping.update" +
+      "pping.UpdateLocRequest\032\033.shipping.Update" +
       "LocResponse\"\000(\0010\001B\035\n\013s2.shippingB\014Shippi" +
       "ngImplP\001b\006proto3"
     };
@@ -80,17 +80,17 @@ public final class ShippingImpl {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_shipping_ShippingQtyResponse_descriptor,
         new java.lang.String[] { "Message", });
-    internal_static_shipping_updateLocRequest_descriptor =
+    internal_static_shipping_UpdateLocRequest_descriptor =
       getDescriptor().getMessageTypes().get(2);
-    internal_static_shipping_updateLocRequest_fieldAccessorTable = new
+    internal_static_shipping_UpdateLocRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_shipping_updateLocRequest_descriptor,
+        internal_static_shipping_UpdateLocRequest_descriptor,
         new java.lang.String[] { "ProductIndivNo", });
-    internal_static_shipping_updateLocResponse_descriptor =
+    internal_static_shipping_UpdateLocResponse_descriptor =
       getDescriptor().getMessageTypes().get(3);
-    internal_static_shipping_updateLocResponse_fieldAccessorTable = new
+    internal_static_shipping_UpdateLocResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_shipping_updateLocResponse_descriptor,
+        internal_static_shipping_UpdateLocResponse_descriptor,
         new java.lang.String[] { "LocationNo", "AvailNum", });
   }
 

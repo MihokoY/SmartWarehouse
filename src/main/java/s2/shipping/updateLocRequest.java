@@ -4,18 +4,18 @@
 package s2.shipping;
 
 /**
- * Protobuf type {@code shipping.updateLocRequest}
+ * Protobuf type {@code shipping.UpdateLocRequest}
  */
-public  final class updateLocRequest extends
+public  final class UpdateLocRequest extends
     com.google.protobuf.GeneratedMessageV3 implements
-    // @@protoc_insertion_point(message_implements:shipping.updateLocRequest)
-    updateLocRequestOrBuilder {
+    // @@protoc_insertion_point(message_implements:shipping.UpdateLocRequest)
+    UpdateLocRequestOrBuilder {
 private static final long serialVersionUID = 0L;
-  // Use updateLocRequest.newBuilder() to construct.
-  private updateLocRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+  // Use UpdateLocRequest.newBuilder() to construct.
+  private UpdateLocRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
   }
-  private updateLocRequest() {
+  private UpdateLocRequest() {
     productIndivNo_ = "";
   }
 
@@ -24,7 +24,7 @@ private static final long serialVersionUID = 0L;
   getUnknownFields() {
     return this.unknownFields;
   }
-  private updateLocRequest(
+  private UpdateLocRequest(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
@@ -70,15 +70,15 @@ private static final long serialVersionUID = 0L;
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return s2.shipping.ShippingImpl.internal_static_shipping_updateLocRequest_descriptor;
+    return s2.shipping.ShippingImpl.internal_static_shipping_UpdateLocRequest_descriptor;
   }
 
   @java.lang.Override
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return s2.shipping.ShippingImpl.internal_static_shipping_updateLocRequest_fieldAccessorTable
+    return s2.shipping.ShippingImpl.internal_static_shipping_UpdateLocRequest_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            s2.shipping.updateLocRequest.class, s2.shipping.updateLocRequest.Builder.class);
+            s2.shipping.UpdateLocRequest.class, s2.shipping.UpdateLocRequest.Builder.class);
   }
 
   public static final int PRODUCTINDIVNO_FIELD_NUMBER = 1;
@@ -154,10 +154,10 @@ private static final long serialVersionUID = 0L;
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof s2.shipping.updateLocRequest)) {
+    if (!(obj instanceof s2.shipping.UpdateLocRequest)) {
       return super.equals(obj);
     }
-    s2.shipping.updateLocRequest other = (s2.shipping.updateLocRequest) obj;
+    s2.shipping.UpdateLocRequest other = (s2.shipping.UpdateLocRequest) obj;
 
     boolean result = true;
     result = result && getProductIndivNo()
@@ -180,69 +180,69 @@ private static final long serialVersionUID = 0L;
     return hash;
   }
 
-  public static s2.shipping.updateLocRequest parseFrom(
+  public static s2.shipping.UpdateLocRequest parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static s2.shipping.updateLocRequest parseFrom(
+  public static s2.shipping.UpdateLocRequest parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static s2.shipping.updateLocRequest parseFrom(
+  public static s2.shipping.UpdateLocRequest parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static s2.shipping.updateLocRequest parseFrom(
+  public static s2.shipping.UpdateLocRequest parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static s2.shipping.updateLocRequest parseFrom(byte[] data)
+  public static s2.shipping.UpdateLocRequest parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static s2.shipping.updateLocRequest parseFrom(
+  public static s2.shipping.UpdateLocRequest parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static s2.shipping.updateLocRequest parseFrom(java.io.InputStream input)
+  public static s2.shipping.UpdateLocRequest parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static s2.shipping.updateLocRequest parseFrom(
+  public static s2.shipping.UpdateLocRequest parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static s2.shipping.updateLocRequest parseDelimitedFrom(java.io.InputStream input)
+  public static s2.shipping.UpdateLocRequest parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static s2.shipping.updateLocRequest parseDelimitedFrom(
+  public static s2.shipping.UpdateLocRequest parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static s2.shipping.updateLocRequest parseFrom(
+  public static s2.shipping.UpdateLocRequest parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static s2.shipping.updateLocRequest parseFrom(
+  public static s2.shipping.UpdateLocRequest parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -255,7 +255,7 @@ private static final long serialVersionUID = 0L;
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(s2.shipping.updateLocRequest prototype) {
+  public static Builder newBuilder(s2.shipping.UpdateLocRequest prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
   @java.lang.Override
@@ -271,26 +271,26 @@ private static final long serialVersionUID = 0L;
     return builder;
   }
   /**
-   * Protobuf type {@code shipping.updateLocRequest}
+   * Protobuf type {@code shipping.UpdateLocRequest}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:shipping.updateLocRequest)
-      s2.shipping.updateLocRequestOrBuilder {
+      // @@protoc_insertion_point(builder_implements:shipping.UpdateLocRequest)
+      s2.shipping.UpdateLocRequestOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return s2.shipping.ShippingImpl.internal_static_shipping_updateLocRequest_descriptor;
+      return s2.shipping.ShippingImpl.internal_static_shipping_UpdateLocRequest_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return s2.shipping.ShippingImpl.internal_static_shipping_updateLocRequest_fieldAccessorTable
+      return s2.shipping.ShippingImpl.internal_static_shipping_UpdateLocRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              s2.shipping.updateLocRequest.class, s2.shipping.updateLocRequest.Builder.class);
+              s2.shipping.UpdateLocRequest.class, s2.shipping.UpdateLocRequest.Builder.class);
     }
 
-    // Construct using s2.shipping.updateLocRequest.newBuilder()
+    // Construct using s2.shipping.UpdateLocRequest.newBuilder()
     private Builder() {
       maybeForceBuilderInitialization();
     }
@@ -316,17 +316,17 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return s2.shipping.ShippingImpl.internal_static_shipping_updateLocRequest_descriptor;
+      return s2.shipping.ShippingImpl.internal_static_shipping_UpdateLocRequest_descriptor;
     }
 
     @java.lang.Override
-    public s2.shipping.updateLocRequest getDefaultInstanceForType() {
-      return s2.shipping.updateLocRequest.getDefaultInstance();
+    public s2.shipping.UpdateLocRequest getDefaultInstanceForType() {
+      return s2.shipping.UpdateLocRequest.getDefaultInstance();
     }
 
     @java.lang.Override
-    public s2.shipping.updateLocRequest build() {
-      s2.shipping.updateLocRequest result = buildPartial();
+    public s2.shipping.UpdateLocRequest build() {
+      s2.shipping.UpdateLocRequest result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
@@ -334,8 +334,8 @@ private static final long serialVersionUID = 0L;
     }
 
     @java.lang.Override
-    public s2.shipping.updateLocRequest buildPartial() {
-      s2.shipping.updateLocRequest result = new s2.shipping.updateLocRequest(this);
+    public s2.shipping.UpdateLocRequest buildPartial() {
+      s2.shipping.UpdateLocRequest result = new s2.shipping.UpdateLocRequest(this);
       result.productIndivNo_ = productIndivNo_;
       onBuilt();
       return result;
@@ -375,16 +375,16 @@ private static final long serialVersionUID = 0L;
     }
     @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof s2.shipping.updateLocRequest) {
-        return mergeFrom((s2.shipping.updateLocRequest)other);
+      if (other instanceof s2.shipping.UpdateLocRequest) {
+        return mergeFrom((s2.shipping.UpdateLocRequest)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(s2.shipping.updateLocRequest other) {
-      if (other == s2.shipping.updateLocRequest.getDefaultInstance()) return this;
+    public Builder mergeFrom(s2.shipping.UpdateLocRequest other) {
+      if (other == s2.shipping.UpdateLocRequest.getDefaultInstance()) return this;
       if (!other.getProductIndivNo().isEmpty()) {
         productIndivNo_ = other.productIndivNo_;
         onChanged();
@@ -404,11 +404,11 @@ private static final long serialVersionUID = 0L;
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      s2.shipping.updateLocRequest parsedMessage = null;
+      s2.shipping.UpdateLocRequest parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (s2.shipping.updateLocRequest) e.getUnfinishedMessage();
+        parsedMessage = (s2.shipping.UpdateLocRequest) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -499,41 +499,41 @@ private static final long serialVersionUID = 0L;
     }
 
 
-    // @@protoc_insertion_point(builder_scope:shipping.updateLocRequest)
+    // @@protoc_insertion_point(builder_scope:shipping.UpdateLocRequest)
   }
 
-  // @@protoc_insertion_point(class_scope:shipping.updateLocRequest)
-  private static final s2.shipping.updateLocRequest DEFAULT_INSTANCE;
+  // @@protoc_insertion_point(class_scope:shipping.UpdateLocRequest)
+  private static final s2.shipping.UpdateLocRequest DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new s2.shipping.updateLocRequest();
+    DEFAULT_INSTANCE = new s2.shipping.UpdateLocRequest();
   }
 
-  public static s2.shipping.updateLocRequest getDefaultInstance() {
+  public static s2.shipping.UpdateLocRequest getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<updateLocRequest>
-      PARSER = new com.google.protobuf.AbstractParser<updateLocRequest>() {
+  private static final com.google.protobuf.Parser<UpdateLocRequest>
+      PARSER = new com.google.protobuf.AbstractParser<UpdateLocRequest>() {
     @java.lang.Override
-    public updateLocRequest parsePartialFrom(
+    public UpdateLocRequest parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return new updateLocRequest(input, extensionRegistry);
+      return new UpdateLocRequest(input, extensionRegistry);
     }
   };
 
-  public static com.google.protobuf.Parser<updateLocRequest> parser() {
+  public static com.google.protobuf.Parser<UpdateLocRequest> parser() {
     return PARSER;
   }
 
   @java.lang.Override
-  public com.google.protobuf.Parser<updateLocRequest> getParserForType() {
+  public com.google.protobuf.Parser<UpdateLocRequest> getParserForType() {
     return PARSER;
   }
 
   @java.lang.Override
-  public s2.shipping.updateLocRequest getDefaultInstanceForType() {
+  public s2.shipping.UpdateLocRequest getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

@@ -11,7 +11,7 @@ package shipping;
 service Shipping  {
 	rpc checkShippingQuantity (stream ShippingQtyRequest) returns (ShippingQtyResponse) {}
 
-	rpc updateLocation (stream updateLocRequest) returns (stream updateLocResponse) {}
+	rpc updateLocation (stream UpdateLocRequest) returns (stream UpdateLocResponse) {}
 }
 
 // Define the messages
@@ -24,11 +24,11 @@ message ShippingQtyResponse {
 	string message = 1;
 }
 
-message updateLocRequest {
+message UpdateLocRequest {
 	string productIndivNo = 1;
 }
 
-message updateLocResponse {
+message UpdateLocResponse {
 	string locationNo = 1;
 	int32 availNum = 2;
 }
