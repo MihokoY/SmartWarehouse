@@ -7,8 +7,6 @@ import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
 import io.grpc.stub.StreamObserver;
-import s1.receiving.SetLocRequest;
-import s1.receiving.SetLocResponse;
 import s3.inventory.InventoryGrpc.InventoryBlockingStub;
 import s3.inventory.InventoryGrpc.InventoryStub;
 

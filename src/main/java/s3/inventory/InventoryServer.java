@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
-import s1.receiving.SetLocRequest;
-import s1.receiving.SetLocResponse;
 import s3.inventory.InventoryGrpc.InventoryImplBase;
 
 public class InventoryServer extends InventoryImplBase {

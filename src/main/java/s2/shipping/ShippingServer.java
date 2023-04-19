@@ -158,6 +158,7 @@ public class ShippingServer extends ShippingImplBase {
 						// get the location No where productNos are the same
 						if(indivNo.equals(productIndivNo)) {
 							locatNo = locationNo;
+							// update LocationAvailability.csv (availableNum -= 1)
 							// update LocationList.csv (delete this product data)
 							// update InventoryList.csv (totalQty -= 1)
 							break;

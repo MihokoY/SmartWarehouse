@@ -1,7 +1,9 @@
 package s1.receiving;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import io.grpc.Server;
@@ -58,8 +60,10 @@ public class ReceivingServer extends ReceivingImplBase {
 								
 				//import the csv file
 				BufferedReader br = null;
+				
 				try{
 					br = new BufferedReader(new FileReader("src/main/java/ReceivedList.csv"));
+					bw = new BufferedWriter(new FileWriter("src/main/java/ReceivedList_after.csv"));
 					String line="";
 					String[] tempArr; // using this to store each column in a line
 
