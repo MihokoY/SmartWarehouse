@@ -1,7 +1,15 @@
 package s1.receiving;
 
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
+
+import javax.jmdns.JmDNS;
+import javax.jmdns.ServiceEvent;
+import javax.jmdns.ServiceInfo;
+import javax.jmdns.ServiceListener;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
@@ -15,9 +23,18 @@ public class ReceivingClient{
 	private static ReceivingBlockingStub blockingStub;
 	private static ReceivingStub asyncStub;
 	
+	private static ServiceInfo ReceivingInfo;
+	
 	public static void main(String[] args) {
-		String host = "localhost";
-		int port = 50051;
+		
+		String receiving_service_type = "_receiving._tcp.local.";
+		discoverReceivingService(receiving_service_type);
+		
+		String host = ReceivingInfo.getHostAddresses()[0];
+		int port = ReceivingInfo.getPort();
+		
+		//String host = "localhost";
+		//int port = 50051;
 		
 		ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
 		
@@ -42,6 +59,58 @@ public class ReceivingClient{
 			}
 		}
 		
+	}
+	
+	// Discover service
+	private static void discoverReceivingService(String service_type) {
+
+		try {
+			// Create a JmDNS instance
+			JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
+
+			jmdns.addServiceListener(service_type, new ServiceListener() {
+
+				@Override
+				public void serviceResolved(ServiceEvent event) {
+					System.out.println("Receiving Service resolved: " + event.getInfo());
+
+					ReceivingInfo = event.getInfo();
+
+					int port = ReceivingInfo.getPort();
+
+					System.out.println("resolving " + service_type + " with properties ...");
+					System.out.println("\t port: " + port);
+					System.out.println("\t type:" + event.getType());
+					System.out.println("\t name: " + event.getName());
+					System.out.println("\t description/properties: " + ReceivingInfo.getNiceTextString());
+					System.out.println("\t host: " + ReceivingInfo.getHostAddresses()[0]);
+
+				}
+
+				@Override
+				public void serviceRemoved(ServiceEvent event) {
+					System.out.println("Receiving Service removed: " + event.getInfo());
+				}
+
+				@Override
+				public void serviceAdded(ServiceEvent event) {
+					System.out.println("Receiving Service added: " + event.getInfo());
+				}
+			});
+
+			// Wait a bit
+			Thread.sleep(2000);
+
+			jmdns.close();
+
+		} catch (UnknownHostException e) {
+			System.out.println(e.getMessage());
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	

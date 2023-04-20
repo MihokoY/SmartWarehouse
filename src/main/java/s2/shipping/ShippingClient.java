@@ -1,7 +1,15 @@
 package s2.shipping;
 
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
+
+import javax.jmdns.JmDNS;
+import javax.jmdns.ServiceEvent;
+import javax.jmdns.ServiceInfo;
+import javax.jmdns.ServiceListener;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
@@ -15,7 +23,16 @@ public class ShippingClient {
 	private static ShippingBlockingStub blockingStub;
 	private static ShippingStub asyncStub;
 	
+	private static ServiceInfo ShippingInfo;
+	
 	public static void main(String[] args) {
+		
+		//String shipping_service_type = "_shipping._tcp.local.";
+		//discoverShippingService(shipping_service_type);
+		
+		//String host = ShippingInfo.getHostAddresses()[0];
+		//int port = ShippingInfo.getPort();
+		
 		String host = "localhost";
 		int port = 50052;
 		
@@ -40,6 +57,59 @@ public class ShippingClient {
 			}
 		}
 		
+	}
+	
+	
+	// Discover service
+	private static void discoverShippingService(String service_type) {
+
+		try {
+			// Create a JmDNS instance
+			JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
+
+			jmdns.addServiceListener(service_type, new ServiceListener() {
+
+				@Override
+				public void serviceResolved(ServiceEvent event) {
+					System.out.println("Shipping Service resolved: " + event.getInfo());
+
+					ShippingInfo = event.getInfo();
+
+					int port = ShippingInfo.getPort();
+
+					System.out.println("resolving " + service_type + " with properties ...");
+					System.out.println("\t port: " + port);
+					System.out.println("\t type:" + event.getType());
+					System.out.println("\t name: " + event.getName());
+					System.out.println("\t description/properties: " + ShippingInfo.getNiceTextString());
+					System.out.println("\t host: " + ShippingInfo.getHostAddresses()[0]);
+
+				}
+
+				@Override
+				public void serviceRemoved(ServiceEvent event) {
+					System.out.println("Shipping Service removed: " + event.getInfo());
+				}
+
+				@Override
+				public void serviceAdded(ServiceEvent event) {
+					System.out.println("Shipping Service added: " + event.getInfo());
+				}
+			});
+
+			// Wait a bit
+			Thread.sleep(2000);
+
+			jmdns.close();
+
+		} catch (UnknownHostException e) {
+			System.out.println(e.getMessage());
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public static void checkShippingQuantity() {
@@ -92,8 +162,6 @@ public class ShippingClient {
 		} catch (InterruptedException e) {			
 			e.printStackTrace();
 		}
-
-
 	}
 	
 	

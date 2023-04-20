@@ -1,7 +1,15 @@
 package s3.inventory;
 
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
+
+import javax.jmdns.JmDNS;
+import javax.jmdns.ServiceEvent;
+import javax.jmdns.ServiceInfo;
+import javax.jmdns.ServiceListener;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
@@ -14,9 +22,17 @@ public class InventoryClient {
 	private static InventoryBlockingStub blockingStub;
 	private static InventoryStub asyncStub;
 	
+	private static ServiceInfo InventoryInfo;
+	
 	public static void main(String[] args) {
-		String host = "localhost";
-		int port = 50053;
+				
+		String inventory_service_type = "_inventory._tcp.local.";
+		discoverInventoryService(inventory_service_type);
+		
+		String host = InventoryInfo.getHostAddresses()[0];
+		int port = InventoryInfo.getPort();
+		//String host = "localhost";
+		//int port = 50053;
 		
 		ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
 		
@@ -42,6 +58,60 @@ public class InventoryClient {
 		}
 		
 	}
+	
+	
+	// Discover service
+	private static void discoverInventoryService(String service_type) {
+
+		try {
+			// Create a JmDNS instance
+			JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
+
+			jmdns.addServiceListener(service_type, new ServiceListener() {
+
+				@Override
+				public void serviceResolved(ServiceEvent event) {
+					System.out.println("Inventory Service resolved: " + event.getInfo());
+
+					InventoryInfo = event.getInfo();
+
+					int port = InventoryInfo.getPort();
+
+					System.out.println("resolving " + service_type + " with properties ...");
+					System.out.println("\t port: " + port);
+					System.out.println("\t type:" + event.getType());
+					System.out.println("\t name: " + event.getName());
+					System.out.println("\t description/properties: " + InventoryInfo.getNiceTextString());
+					System.out.println("\t host: " + InventoryInfo.getHostAddresses()[0]);
+
+				}
+
+				@Override
+				public void serviceRemoved(ServiceEvent event) {
+					System.out.println("Inventory Service removed: " + event.getInfo());
+				}
+
+				@Override
+				public void serviceAdded(ServiceEvent event) {
+					System.out.println("Inventory Service added: " + event.getInfo());
+				}
+			});
+
+			// Wait a bit
+			Thread.sleep(2000);
+
+			jmdns.close();
+
+		} catch (UnknownHostException e) {
+			System.out.println(e.getMessage());
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	
 	public static void checkInventoryQuantity() {
 

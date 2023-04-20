@@ -1,23 +1,38 @@
 package s3.inventory;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.InetAddress;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Properties;
+
+import javax.jmdns.JmDNS;
+import javax.jmdns.ServiceEvent;
+import javax.jmdns.ServiceInfo;
+import javax.jmdns.ServiceListener;
 
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
+import s1.receiving.ReceivingServer.Listener;
 import s3.inventory.InventoryGrpc.InventoryImplBase;
 
 public class InventoryServer extends InventoryImplBase {
 	public static void main(String[] args) {
 		InventoryServer inventoryserver = new InventoryServer();
-		int port = 50053;
+		
+		Properties prop = inventoryserver.getProperties();
+		
+		inventoryserver.registerService(prop);
+		
+		int port = Integer.valueOf( prop.getProperty("service3_port") );// #.50053;
 		
 		Server server;
 		try {
@@ -30,6 +45,85 @@ public class InventoryServer extends InventoryImplBase {
 		}		
 		
 	}
+	
+	private Properties getProperties() {
+
+		Properties prop = null;
+
+		try (InputStream input = new FileInputStream("src/main/resources/warehouse.properties")) {
+			prop = new Properties();
+			// load a properties file
+			prop.load(input);
+
+			// get the property value and print it out
+			System.out.println("Inventory Service properies ...");
+			System.out.println("\t service1_type: " + prop.getProperty("service3_type"));
+			System.out.println("\t service1_name: " +prop.getProperty("service3_name"));
+			System.out.println("\t service1_description: " +prop.getProperty("service3_description"));
+			System.out.println("\t service1_port: " +prop.getProperty("service3_port"));
+
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+
+		return prop;
+	}
+	
+	private void registerService(Properties prop) {
+
+		try {
+			// Create a JmDNS instance
+			JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
+
+			String service_type = prop.getProperty("service3_type");// "_inventory._tcp.local.";
+			String service_name = prop.getProperty("service3_name");// "inventory";
+			int service_port = Integer.valueOf(prop.getProperty("service3_port"));// #.50053;
+
+			String service_description_properties = prop.getProperty("service3_description");// "service for inventory management";
+
+			// Register a service
+			ServiceInfo serviceInfo = ServiceInfo.create(service_type, service_name, service_port,
+					service_description_properties);
+			jmdns.registerService(serviceInfo);
+
+			System.out.printf("registrering service with type %s and name %s \n", service_type, service_name);
+
+			//Service discovery
+			jmdns.addServiceListener(service_type, new Listener());
+			
+			// Wait for a bit
+			Thread.sleep(1000);
+
+			// Unregister all services
+			// jmdns.unregisterAllServices();
+
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	// Discovery service
+	public static class Listener implements ServiceListener {
+
+		@Override
+		public void serviceAdded(ServiceEvent event) {
+			System.out.println("Service added: " + event.getInfo());
+		}
+
+		@Override
+		public void serviceRemoved(ServiceEvent event) {
+			System.out.println("Service removed: " + event.getInfo());
+		}
+
+		@Override
+		public void serviceResolved(ServiceEvent event) {
+			System.out.println("Service resolved: " + event.getInfo());
+		}
+	}
+	
 
 	@Override
 	public void checkInventoryQuantity(InventoryQtyRequest request,
@@ -220,11 +314,7 @@ public class InventoryServer extends InventoryImplBase {
 				float totalPrc = Float.parseFloat(tempArr[3]);
 					
 				// add totalQty and totalPrice where productNo and date are match
-				if(productNo.equals(prdctNo) && date.compareTo(startDate)>=0 && date.compareTo(endDate)<=0) {
-					System.out.println(date);
-					System.out.println(startDate);
-					System.out.println(endDate);
-					
+				if(productNo.equals(prdctNo) && date.compareTo(startDate)>=0 && date.compareTo(endDate)<=0) {					
 					totalQty = totalQty + orderQty;
 					totalPrice = totalPrice + totalPrc;
 				}				

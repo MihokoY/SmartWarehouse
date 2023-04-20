@@ -1,9 +1,19 @@
 package s2.shipping;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.InetAddress;
 import java.util.ArrayList;
+import java.util.Properties;
+
+import javax.jmdns.JmDNS;
+import javax.jmdns.ServiceEvent;
+import javax.jmdns.ServiceInfo;
+import javax.jmdns.ServiceListener;
+
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
@@ -12,11 +22,15 @@ import s2.shipping.ShippingGrpc.ShippingImplBase;
 public class ShippingServer extends ShippingImplBase {
 	public static void main(String[] args) {
 		ShippingServer shippingserver = new ShippingServer();
-		int port = 50052;
 		
-		Server server;
+		Properties prop = shippingserver.getProperties();
+		
+		shippingserver.registerService(prop);
+		
+		int port = Integer.valueOf( prop.getProperty("service2_port") );// #.50052;
+		
 		try {
-			server = ServerBuilder.forPort(port).addService(shippingserver).build().start();
+			Server server = ServerBuilder.forPort(port).addService(shippingserver).build().start();
 			System.out.println("Shipping Server started, listening on " + port);
 			server.awaitTermination();
 		} catch (IOException | InterruptedException e) {
@@ -25,7 +39,86 @@ public class ShippingServer extends ShippingImplBase {
 		}		
 		
 	}
+	
+	private Properties getProperties() {
 
+		Properties prop = null;
+
+		try (InputStream input = new FileInputStream("src/main/resources/warehouse.properties")) {
+			prop = new Properties();
+			// load a properties file
+			prop.load(input);
+
+			// get the property value and print it out
+			System.out.println("Shipping Service properies ...");
+			System.out.println("\t service1_type: " + prop.getProperty("service2_type"));
+			System.out.println("\t service1_name: " +prop.getProperty("service2_name"));
+			System.out.println("\t service1_description: " +prop.getProperty("service2_description"));
+			System.out.println("\t service1_port: " +prop.getProperty("service2_port"));
+
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+
+		return prop;
+	}
+	
+	private void registerService(Properties prop) {
+
+		try {
+			// Create a JmDNS instance
+			JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
+
+			String service_type = prop.getProperty("service2_type");// "_shipping._tcp.local.";
+			String service_name = prop.getProperty("service2_name");// "shipping";
+			int service_port = Integer.valueOf(prop.getProperty("service2_port"));// #.50052;
+
+			String service_description_properties = prop.getProperty("service2_description");// "service for shipping management";
+
+			// Register a service
+			ServiceInfo serviceInfo = ServiceInfo.create(service_type, service_name, service_port,
+					service_description_properties);
+			jmdns.registerService(serviceInfo);
+
+			System.out.printf("registrering service with type %s and name %s \n", service_type, service_name);
+
+			//Service discovery
+			jmdns.addServiceListener(service_type, new Listener());
+			
+			// Wait for a bit
+			Thread.sleep(1000);
+
+			// Unregister all services
+			// jmdns.unregisterAllServices();
+
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	// Discovery service
+	public static class Listener implements ServiceListener {
+
+		@Override
+		public void serviceAdded(ServiceEvent event) {
+			System.out.println("Service added: " + event.getInfo());
+		}
+
+		@Override
+		public void serviceRemoved(ServiceEvent event) {
+			System.out.println("Service removed: " + event.getInfo());
+		}
+
+		@Override
+		public void serviceResolved(ServiceEvent event) {
+			System.out.println("Service resolved: " + event.getInfo());
+		}
+	}
+
+	
 	@Override
 	public StreamObserver<ShippingQtyRequest> checkShippingQuantity(
 			StreamObserver<ShippingQtyResponse> responseObserver) {

@@ -1,5 +1,6 @@
 package s1.receiving;
 
+import java.awt.Dimension;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -63,13 +64,13 @@ public class GUIAppS1 {
 	//Create the application
 	public GUIAppS1() {
 		
-		//String receiving_service_type = "receiving._tcp.local.";
-		//discoverReceivingService(receiving_service_type);
+		String receiving_service_type = "_receiving._tcp.local.";
+		discoverReceivingService(receiving_service_type);
 		
-		//String host = ReceivingServiceInfo.getHostAddresses()[0];
-		//int port = ReceivingServiceInfo.getPort();
-		String host = "localhost";
-		int port = 50051;
+		String host = ReceivingServiceInfo.getHostAddresses()[0];
+		int port = ReceivingServiceInfo.getPort();
+		//String host = "localhost";
+		//int port = 50051;
 		
 		ManagedChannel channel = ManagedChannelBuilder
 								.forAddress(host, port)
@@ -143,7 +144,7 @@ public class GUIAppS1 {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setTitle("Client - Receiving Service Controller");
-		frame.setBounds(100, 100, 500, 500);
+		frame.setBounds(100, 100, 550, 500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		BoxLayout bl = new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS);
@@ -155,12 +156,14 @@ public class GUIAppS1 {
 		JPanel name1 = new JPanel();
 		frame.getContentPane().add(name1);
 		name1.setLayout(new FlowLayout(FlowLayout.LEFT));
+		name1.setPreferredSize(new Dimension(200, 10));
 		JLabel methodName1 = new JLabel("1. Check Received Quantity");		
 		name1.add(methodName1);
 		
 		// request & response
 		JPanel panel_1 = new JPanel();
 		frame.getContentPane().add(panel_1);
+		panel_1.setPreferredSize(new Dimension(200, 80));
 		panel_1.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
 		
 		JLabel lblNewLabel_1 = new JLabel("productNo");
@@ -234,12 +237,14 @@ public class GUIAppS1 {
 		JPanel name2 = new JPanel();
 		frame.getContentPane().add(name2);
 		name2.setLayout(new FlowLayout(FlowLayout.LEFT));
+		name2.setPreferredSize(new Dimension(200, 10));
 		JLabel methodName2 = new JLabel("2. Set Location");		
 		name2.add(methodName2);
 		
 		// request & response
 		JPanel panel_2 = new JPanel();
 		frame.getContentPane().add(panel_2);
+		panel_2.setPreferredSize(new Dimension(200, 80));
 		panel_2.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
 		
 		JLabel lblNewLabel_3 = new JLabel("locationNo");
@@ -279,7 +284,7 @@ public class GUIAppS1 {
 		});
 		panel_2.add(btnCalculate2);
 		
-		textResponse2 = new JTextArea(3, 20);
+		textResponse2 = new JTextArea(3, 50);
 		textResponse2.setLineWrap(true);
 		textResponse2.setWrapStyleWord(true);
 		
@@ -294,12 +299,14 @@ public class GUIAppS1 {
 		JPanel name3 = new JPanel();
 		frame.getContentPane().add(name3);
 		name3.setLayout(new FlowLayout(FlowLayout.LEFT));
+		name3.setPreferredSize(new Dimension(200, 10));
 		JLabel methodName3 = new JLabel("3. Check Location Availability");		
 		name3.add(methodName3);
 		
 		// request & response
 		JPanel panel_3 = new JPanel();
 		frame.getContentPane().add(panel_3);
+		panel_3.setPreferredSize(new Dimension(200, 80));
 		panel_3.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
 		
 		JLabel lblNewLabel_5 = new JLabel("locationNo");
