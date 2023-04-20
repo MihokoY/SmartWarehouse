@@ -8,22 +8,12 @@ public interface OrderHisResponseOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string productNo = 1;</code>
-   */
-  java.lang.String getProductNo();
-  /**
-   * <code>string productNo = 1;</code>
-   */
-  com.google.protobuf.ByteString
-      getProductNoBytes();
-
-  /**
-   * <code>int32 totalQty = 2;</code>
+   * <code>int32 totalQty = 1;</code>
    */
   int getTotalQty();
 
   /**
-   * <code>float totalPrice = 3;</code>
+   * <code>float totalPrice = 2;</code>
    */
   float getTotalPrice();
 }

@@ -3,9 +3,11 @@ package s3.inventory;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.Date;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
@@ -131,7 +133,7 @@ public class InventoryServer extends InventoryImplBase {
 						// set the afterQty where productNos are the same
 						if(ProductNo.equals(prdctNo)) {
 							afterQty = TotalQty + orderQty;
-							// update OrderHistory.csv (add this order data)
+							// update OrderList.csv (add this order data)
 							break;
 						}
 					}			
@@ -172,16 +174,29 @@ public class InventoryServer extends InventoryImplBase {
 	}
 
 	
-	/*
+
 	@Override
 	public void orderHistory(OrderHisRequest request, StreamObserver<OrderHisResponse> responseObserver) {
 		
-		System.out.println("receiving orderHistory method startDate: " + request.getStartDate() + ", endDate: " + request.getEndDate() );
+		System.out.println("receiving orderHistory method startDate: " + request.getStartDate() 
+							+ ", endDate: " + request.getEndDate()+ ", productNo: " + request.getProductNo() );
 		
-		String startDate = request.getStartDate();
-		String endDate = request.getEndDate();
+		SimpleDateFormat ft = new SimpleDateFormat ("dd/MM/yyyy",Locale.UK);
+		Date startDate = null;
+		Date endDate = null;
 		
-		ArrayList<String> history = new ArrayList();
+		try {
+			startDate = ft.parse(request.getStartDate());
+			endDate = ft.parse(request.getEndDate());
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		String productNo = request.getProductNo();
+		
+		// set the default response value(availNum)
+		int totalQty = 0;
+		float totalPrice = 0;
 		
 		//import the csv file
 		BufferedReader br = null;
@@ -190,30 +205,32 @@ public class InventoryServer extends InventoryImplBase {
 			String line="";
 			String[] tempArr; // using this to store each column in a line
 
-			br.readLine(); // reading first line to avoid the header
-
-			// this is used to format the incoming date
-			SimpleDateFormat ft = new SimpleDateFormat ("dd-MM-yyyy");
+			br.readLine(); // reading first line to avoid the header			
 						
 			while((line = br.readLine()) != null){ // reading each line of file
 				tempArr = line.split(","); // each column has a comma between it
 
 				// first column
-				Date date = (Date) ft.parse(tempArr[0]);
+				Date date = ft.parse(tempArr[0]);
 				// second column
 				String prdctNo = tempArr[1];
 				// Third column
 				int orderQty = Integer.parseInt(tempArr[2]);
 				// Fourth column
-				float totalPrice = Integer.parseInt(tempArr[3]);
+				float totalPrc = Float.parseFloat(tempArr[3]);
 					
-				// 
-				if() {
-
+				// add totalQty and totalPrice where productNo and date are match
+				if(productNo.equals(prdctNo) && date.compareTo(startDate)>=0 && date.compareTo(endDate)<=0) {
+					System.out.println(date);
+					System.out.println(startDate);
+					System.out.println(endDate);
+					
+					totalQty = totalQty + orderQty;
+					totalPrice = totalPrice + totalPrc;
 				}				
 			}		
 			
-		} catch (IOException e) {
+		} catch (IOException | ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally{
@@ -226,23 +243,10 @@ public class InventoryServer extends InventoryImplBase {
 				}
 			}
 		}
-		
-		for(int i=0; i<history.size(); i++) {
 
-			OrderHisResponse reply = OrderHisResponse.newBuilder().setProductNo(history).setTotalQty(totalQty).setTotalPrice(totalPrice).build();
-
-			responseObserver.onNext(reply);
-
-			try {
-				//wait for a second
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
+		OrderHisResponse reply = OrderHisResponse.newBuilder().setTotalQty(totalQty).setTotalPrice(totalPrice).build();
+		System.out.println("Reply totalQty: " + totalQty + ", Reply totalQty: " + totalPrice);
+		responseObserver.onNext(reply);
 		responseObserver.onCompleted();
 	}
-	*/
 }

@@ -13,7 +13,7 @@ service Inventory   {
 
 	rpc order (stream OrderRequest) returns (stream OrderResponse) {}
 
-	rpc orderHistory (OrderHisRequest) returns (stream OrderHisResponse) {}
+	rpc orderHistory (OrderHisRequest) returns (OrderHisResponse) {}
 }
 
 // Define the messages
@@ -39,10 +39,10 @@ message OrderResponse {
 message OrderHisRequest {
 	string startDate = 1;
 	string endDate = 2;
+	string productNo = 3;
 }
 
 message OrderHisResponse {
-	string productNo = 1;
-	int32 totalQty = 2;
-	float totalPrice = 3;
+	int32 totalQty = 1;
+	float totalPrice = 2;
 }

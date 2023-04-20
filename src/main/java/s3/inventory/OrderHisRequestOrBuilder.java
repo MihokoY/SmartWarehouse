@@ -26,4 +26,14 @@ public interface OrderHisRequestOrBuilder extends
    */
   com.google.protobuf.ByteString
       getEndDateBytes();
+
+  /**
+   * <code>string productNo = 3;</code>
+   */
+  java.lang.String getProductNo();
+  /**
+   * <code>string productNo = 3;</code>
+   */
+  com.google.protobuf.ByteString
+      getProductNoBytes();
 }

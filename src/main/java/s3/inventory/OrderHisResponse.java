@@ -16,7 +16,6 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private OrderHisResponse() {
-    productNo_ = "";
     totalQty_ = 0;
     totalPrice_ = 0F;
   }
@@ -45,18 +44,12 @@ private static final long serialVersionUID = 0L;
           case 0:
             done = true;
             break;
-          case 10: {
-            java.lang.String s = input.readStringRequireUtf8();
-
-            productNo_ = s;
-            break;
-          }
-          case 16: {
+          case 8: {
 
             totalQty_ = input.readInt32();
             break;
           }
-          case 29: {
+          case 21: {
 
             totalPrice_ = input.readFloat();
             break;
@@ -93,53 +86,19 @@ private static final long serialVersionUID = 0L;
             s3.inventory.OrderHisResponse.class, s3.inventory.OrderHisResponse.Builder.class);
   }
 
-  public static final int PRODUCTNO_FIELD_NUMBER = 1;
-  private volatile java.lang.Object productNo_;
-  /**
-   * <code>string productNo = 1;</code>
-   */
-  public java.lang.String getProductNo() {
-    java.lang.Object ref = productNo_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      productNo_ = s;
-      return s;
-    }
-  }
-  /**
-   * <code>string productNo = 1;</code>
-   */
-  public com.google.protobuf.ByteString
-      getProductNoBytes() {
-    java.lang.Object ref = productNo_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      productNo_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
-  }
-
-  public static final int TOTALQTY_FIELD_NUMBER = 2;
+  public static final int TOTALQTY_FIELD_NUMBER = 1;
   private int totalQty_;
   /**
-   * <code>int32 totalQty = 2;</code>
+   * <code>int32 totalQty = 1;</code>
    */
   public int getTotalQty() {
     return totalQty_;
   }
 
-  public static final int TOTALPRICE_FIELD_NUMBER = 3;
+  public static final int TOTALPRICE_FIELD_NUMBER = 2;
   private float totalPrice_;
   /**
-   * <code>float totalPrice = 3;</code>
+   * <code>float totalPrice = 2;</code>
    */
   public float getTotalPrice() {
     return totalPrice_;
@@ -159,14 +118,11 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (!getProductNoBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, productNo_);
-    }
     if (totalQty_ != 0) {
-      output.writeInt32(2, totalQty_);
+      output.writeInt32(1, totalQty_);
     }
     if (totalPrice_ != 0F) {
-      output.writeFloat(3, totalPrice_);
+      output.writeFloat(2, totalPrice_);
     }
     unknownFields.writeTo(output);
   }
@@ -177,16 +133,13 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (!getProductNoBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, productNo_);
-    }
     if (totalQty_ != 0) {
       size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(2, totalQty_);
+        .computeInt32Size(1, totalQty_);
     }
     if (totalPrice_ != 0F) {
       size += com.google.protobuf.CodedOutputStream
-        .computeFloatSize(3, totalPrice_);
+        .computeFloatSize(2, totalPrice_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -204,8 +157,6 @@ private static final long serialVersionUID = 0L;
     s3.inventory.OrderHisResponse other = (s3.inventory.OrderHisResponse) obj;
 
     boolean result = true;
-    result = result && getProductNo()
-        .equals(other.getProductNo());
     result = result && (getTotalQty()
         == other.getTotalQty());
     result = result && (
@@ -223,8 +174,6 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + PRODUCTNO_FIELD_NUMBER;
-    hash = (53 * hash) + getProductNo().hashCode();
     hash = (37 * hash) + TOTALQTY_FIELD_NUMBER;
     hash = (53 * hash) + getTotalQty();
     hash = (37 * hash) + TOTALPRICE_FIELD_NUMBER;
@@ -363,8 +312,6 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      productNo_ = "";
-
       totalQty_ = 0;
 
       totalPrice_ = 0F;
@@ -395,7 +342,6 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public s3.inventory.OrderHisResponse buildPartial() {
       s3.inventory.OrderHisResponse result = new s3.inventory.OrderHisResponse(this);
-      result.productNo_ = productNo_;
       result.totalQty_ = totalQty_;
       result.totalPrice_ = totalPrice_;
       onBuilt();
@@ -446,10 +392,6 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(s3.inventory.OrderHisResponse other) {
       if (other == s3.inventory.OrderHisResponse.getDefaultInstance()) return this;
-      if (!other.getProductNo().isEmpty()) {
-        productNo_ = other.productNo_;
-        onChanged();
-      }
       if (other.getTotalQty() != 0) {
         setTotalQty(other.getTotalQty());
       }
@@ -485,84 +427,15 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object productNo_ = "";
-    /**
-     * <code>string productNo = 1;</code>
-     */
-    public java.lang.String getProductNo() {
-      java.lang.Object ref = productNo_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        productNo_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
-    }
-    /**
-     * <code>string productNo = 1;</code>
-     */
-    public com.google.protobuf.ByteString
-        getProductNoBytes() {
-      java.lang.Object ref = productNo_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        productNo_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string productNo = 1;</code>
-     */
-    public Builder setProductNo(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
-      productNo_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string productNo = 1;</code>
-     */
-    public Builder clearProductNo() {
-      
-      productNo_ = getDefaultInstance().getProductNo();
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string productNo = 1;</code>
-     */
-    public Builder setProductNoBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      productNo_ = value;
-      onChanged();
-      return this;
-    }
-
     private int totalQty_ ;
     /**
-     * <code>int32 totalQty = 2;</code>
+     * <code>int32 totalQty = 1;</code>
      */
     public int getTotalQty() {
       return totalQty_;
     }
     /**
-     * <code>int32 totalQty = 2;</code>
+     * <code>int32 totalQty = 1;</code>
      */
     public Builder setTotalQty(int value) {
       
@@ -571,7 +444,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>int32 totalQty = 2;</code>
+     * <code>int32 totalQty = 1;</code>
      */
     public Builder clearTotalQty() {
       
@@ -582,13 +455,13 @@ private static final long serialVersionUID = 0L;
 
     private float totalPrice_ ;
     /**
-     * <code>float totalPrice = 3;</code>
+     * <code>float totalPrice = 2;</code>
      */
     public float getTotalPrice() {
       return totalPrice_;
     }
     /**
-     * <code>float totalPrice = 3;</code>
+     * <code>float totalPrice = 2;</code>
      */
     public Builder setTotalPrice(float value) {
       
@@ -597,7 +470,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>float totalPrice = 3;</code>
+     * <code>float totalPrice = 2;</code>
      */
     public Builder clearTotalPrice() {
       

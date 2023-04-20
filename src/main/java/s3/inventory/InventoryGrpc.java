@@ -101,7 +101,7 @@ public final class InventoryGrpc {
       fullMethodName = SERVICE_NAME + '/' + "orderHistory",
       requestType = s3.inventory.OrderHisRequest.class,
       responseType = s3.inventory.OrderHisResponse.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
   public static io.grpc.MethodDescriptor<s3.inventory.OrderHisRequest,
       s3.inventory.OrderHisResponse> getOrderHistoryMethod() {
     io.grpc.MethodDescriptor<s3.inventory.OrderHisRequest, s3.inventory.OrderHisResponse> getOrderHistoryMethod;
@@ -110,7 +110,7 @@ public final class InventoryGrpc {
         if ((getOrderHistoryMethod = InventoryGrpc.getOrderHistoryMethod) == null) {
           InventoryGrpc.getOrderHistoryMethod = getOrderHistoryMethod = 
               io.grpc.MethodDescriptor.<s3.inventory.OrderHisRequest, s3.inventory.OrderHisResponse>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(
                   "inventory.Inventory", "orderHistory"))
               .setSampledToLocalTracing(true)
@@ -195,7 +195,7 @@ public final class InventoryGrpc {
                   this, METHODID_ORDER)))
           .addMethod(
             getOrderHistoryMethod(),
-            asyncServerStreamingCall(
+            asyncUnaryCall(
               new MethodHandlers<
                 s3.inventory.OrderHisRequest,
                 s3.inventory.OrderHisResponse>(
@@ -245,7 +245,7 @@ public final class InventoryGrpc {
      */
     public void orderHistory(s3.inventory.OrderHisRequest request,
         io.grpc.stub.StreamObserver<s3.inventory.OrderHisResponse> responseObserver) {
-      asyncServerStreamingCall(
+      asyncUnaryCall(
           getChannel().newCall(getOrderHistoryMethod(), getCallOptions()), request, responseObserver);
     }
   }
@@ -281,9 +281,8 @@ public final class InventoryGrpc {
 
     /**
      */
-    public java.util.Iterator<s3.inventory.OrderHisResponse> orderHistory(
-        s3.inventory.OrderHisRequest request) {
-      return blockingServerStreamingCall(
+    public s3.inventory.OrderHisResponse orderHistory(s3.inventory.OrderHisRequest request) {
+      return blockingUnaryCall(
           getChannel(), getOrderHistoryMethod(), getCallOptions(), request);
     }
   }
@@ -307,6 +306,14 @@ public final class InventoryGrpc {
     protected InventoryFutureStub build(io.grpc.Channel channel,
         io.grpc.CallOptions callOptions) {
       return new InventoryFutureStub(channel, callOptions);
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<s3.inventory.OrderHisResponse> orderHistory(
+        s3.inventory.OrderHisRequest request) {
+      return futureUnaryCall(
+          getChannel().newCall(getOrderHistoryMethod(), getCallOptions()), request);
     }
   }
 

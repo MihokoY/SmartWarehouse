@@ -28,7 +28,7 @@ public class InventoryClient {
 		
 			order();
 		
-			//orderHistory();
+			orderHistory();
 		
 		}catch (StatusRuntimeException e) {
 			e.getStatus();
@@ -135,5 +135,20 @@ public class InventoryClient {
 			e.printStackTrace();
 		}
 
+	}
+	
+	
+	public static void orderHistory() {
+		String startDate = "01/01/2023";
+		String endDate = "31/01/2023";
+		String productNo = "A001";
+	
+		OrderHisRequest req = OrderHisRequest.newBuilder().setStartDate(startDate).setEndDate(endDate).setProductNo(productNo).build();
+
+		OrderHisResponse response = blockingStub.orderHistory(req);
+
+		System.out.println("productNo: " + productNo + ", Duration: " + startDate + " - " + endDate
+							+ ", totalQty: " + response.getTotalQty()+ ", totalPrice: " + response.getTotalPrice());
+		
 	}
 }

@@ -63,7 +63,7 @@ public class ReceivingServer extends ReceivingImplBase {
 				
 				try{
 					br = new BufferedReader(new FileReader("src/main/java/ReceivedList.csv"));
-					bw = new BufferedWriter(new FileWriter("src/main/java/ReceivedList_after.csv"));
+					
 					String line="";
 					String[] tempArr; // using this to store each column in a line
 
@@ -89,8 +89,7 @@ public class ReceivingServer extends ReceivingImplBase {
 									message = message.concat(ProductNo + " ");
 								}
 							}
-						}
-						
+						}	
 					}
 					
 					// set the message
@@ -144,8 +143,11 @@ public class ReceivingServer extends ReceivingImplBase {
 				
 				// read the csv file
 				BufferedReader br = null;
+				BufferedWriter bw = null;
+				
 				try{
 					br = new BufferedReader(new FileReader("src/main/java/LocationAvailability.csv"));
+					bw = new BufferedWriter(new FileWriter("src/main/java/LocationAvailability.csv",true));
 					String line="";
 					String[] tempArr; // using this to store each column in a line
 
@@ -167,16 +169,15 @@ public class ReceivingServer extends ReceivingImplBase {
 							// update LocationAvailability.csv (availableNum += 1)
 							// update LocationList.csv (add this product data)
 							// update InventoryList.csv (totalQty += 1)
+							String outputLine = String.join(",",locationNo,String.valueOf(availableNum-1),ProductNo);
+							//line = line.replace(String.valueOf(availableNum), String.valueOf(availableNum-1));
+							bw.write(outputLine);
+							System.out.println(outputLine);
+		                    bw.newLine();
+		                    bw.flush();
 							break;
 						}
-
 					}
-				
-				
-				SetLocResponse reply = SetLocResponse.newBuilder().setProductIndivNo(indivNo).setLocationNo(locatNo).build();
-				
-				responseObserver.onNext(reply);
-				
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -185,11 +186,21 @@ public class ReceivingServer extends ReceivingImplBase {
 						try {
 							br.close();
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					if(bw!=null){
+						try {
+							bw.close();
+						} catch (IOException e) {
 							e.printStackTrace();
 						}
 					}
 				}
+				
+				SetLocResponse reply = SetLocResponse.newBuilder().setProductIndivNo(indivNo).setLocationNo(locatNo).build();
+				
+				responseObserver.onNext(reply);
 			}
 
 			@Override

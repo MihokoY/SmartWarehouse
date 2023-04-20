@@ -59,17 +59,17 @@ public final class InventoryImpl {
       "derRequest\022\021\n\tproductNo\030\001 \001(\t\022\020\n\010orderQt" +
       "y\030\002 \001(\005\"F\n\rOrderResponse\022\021\n\tproductNo\030\001 " +
       "\001(\t\022\020\n\010orderQty\030\002 \001(\005\022\020\n\010afterQty\030\003 \001(\005\"" +
-      "5\n\017OrderHisRequest\022\021\n\tstartDate\030\001 \001(\t\022\017\n" +
-      "\007endDate\030\002 \001(\t\"K\n\020OrderHisResponse\022\021\n\tpr" +
-      "oductNo\030\001 \001(\t\022\020\n\010totalQty\030\002 \001(\005\022\022\n\ntotal" +
-      "Price\030\003 \001(\0022\371\001\n\tInventory\022]\n\026checkInvent" +
+      "H\n\017OrderHisRequest\022\021\n\tstartDate\030\001 \001(\t\022\017\n" +
+      "\007endDate\030\002 \001(\t\022\021\n\tproductNo\030\003 \001(\t\"8\n\020Ord" +
+      "erHisResponse\022\020\n\010totalQty\030\001 \001(\005\022\022\n\ntotal" +
+      "Price\030\002 \001(\0022\367\001\n\tInventory\022]\n\026checkInvent" +
       "oryQuantity\022\036.inventory.InventoryQtyRequ" +
       "est\032\037.inventory.InventoryQtyResponse\"\0000\001" +
       "\022@\n\005order\022\027.inventory.OrderRequest\032\030.inv" +
-      "entory.OrderResponse\"\000(\0010\001\022K\n\014orderHisto" +
+      "entory.OrderResponse\"\000(\0010\001\022I\n\014orderHisto" +
       "ry\022\032.inventory.OrderHisRequest\032\033.invento" +
-      "ry.OrderHisResponse\"\0000\001B\037\n\014s3.inventoryB" +
-      "\rInventoryImplP\001b\006proto3"
+      "ry.OrderHisResponse\"\000B\037\n\014s3.inventoryB\rI" +
+      "nventoryImplP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -112,13 +112,13 @@ public final class InventoryImpl {
     internal_static_inventory_OrderHisRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_inventory_OrderHisRequest_descriptor,
-        new java.lang.String[] { "StartDate", "EndDate", });
+        new java.lang.String[] { "StartDate", "EndDate", "ProductNo", });
     internal_static_inventory_OrderHisResponse_descriptor =
       getDescriptor().getMessageTypes().get(5);
     internal_static_inventory_OrderHisResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_inventory_OrderHisResponse_descriptor,
-        new java.lang.String[] { "ProductNo", "TotalQty", "TotalPrice", });
+        new java.lang.String[] { "TotalQty", "TotalPrice", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)
