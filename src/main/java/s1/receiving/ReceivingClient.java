@@ -200,11 +200,11 @@ public class ReceivingClient{
 
 		try {
 
-			requestObserver.onNext(SetLocRequest.newBuilder().setProductNo("A001").setProductIndivNo("A001-01").build());
-			requestObserver.onNext(SetLocRequest.newBuilder().setProductNo("B001").setProductIndivNo("B001-01").build());
-			requestObserver.onNext(SetLocRequest.newBuilder().setProductNo("C001").setProductIndivNo("C001-01").build());
-			requestObserver.onNext(SetLocRequest.newBuilder().setProductNo("D001").setProductIndivNo("D001-01").build());
-			requestObserver.onNext(SetLocRequest.newBuilder().setProductNo("E001").setProductIndivNo("E001-01").build());
+			requestObserver.onNext(SetLocRequest.newBuilder().setProductNo("A001").setProductIndivNo("A001-04").build());
+			requestObserver.onNext(SetLocRequest.newBuilder().setProductNo("B001").setProductIndivNo("B001-04").build());
+			requestObserver.onNext(SetLocRequest.newBuilder().setProductNo("C001").setProductIndivNo("C001-04").build());
+			requestObserver.onNext(SetLocRequest.newBuilder().setProductNo("D001").setProductIndivNo("D001-04").build());
+			requestObserver.onNext(SetLocRequest.newBuilder().setProductNo("E001").setProductIndivNo("E001-04").build());
 
 			// Mark the end of requests
 			requestObserver.onCompleted();

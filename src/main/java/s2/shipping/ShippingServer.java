@@ -37,6 +37,10 @@ public class ShippingServer extends ShippingImplBase {
 		
 	}
 	
+	
+	/**
+	 * Get properties
+	 */
 	private Properties getProperties() {
 
 		Properties prop = null;

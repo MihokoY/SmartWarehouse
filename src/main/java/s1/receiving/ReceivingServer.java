@@ -35,10 +35,13 @@ public class ReceivingServer extends ReceivingImplBase {
 		} catch (IOException | InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}		
-		
+		}				
 	}
 	
+	
+	/**
+	 * Get properties
+	 */ 
 	private Properties getProperties() {
 
 		Properties prop = null;
@@ -62,6 +65,10 @@ public class ReceivingServer extends ReceivingImplBase {
 		return prop;
 	}
 	
+	
+	/**
+	 * Register jmDNS service
+	 */
 	private void registerService(Properties prop) {
 
 		try {
@@ -90,13 +97,14 @@ public class ReceivingServer extends ReceivingImplBase {
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
+	}	
 	
 	
-	//Method1 checkReceivedQuantity
+	/**
+	 * Method1 checkReceivedQuantity
+	 */
 	@Override
 	public StreamObserver<ReceivedQtyRequest> checkReceivedQuantity(
 			StreamObserver<ReceivedQtyResponse> responseObserver) {
@@ -168,8 +176,7 @@ public class ReceivingServer extends ReceivingImplBase {
 					}else {
 						//if there is difference
 						message = "The incorrect product number: " + message;
-					}
-				
+					}				
 					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
@@ -179,7 +186,6 @@ public class ReceivingServer extends ReceivingImplBase {
 						try {
 							br.close();
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
@@ -192,10 +198,13 @@ public class ReceivingServer extends ReceivingImplBase {
 				responseObserver.onCompleted();
 
 			}
-
 		};
 	}
-
+	
+	
+	/**
+	 * Method2 setLocation
+	 */
 	@Override
 	public StreamObserver<SetLocRequest> setLocation(StreamObserver<SetLocResponse> responseObserver) {
 		return new StreamObserver<SetLocRequest> () {
@@ -213,10 +222,12 @@ public class ReceivingServer extends ReceivingImplBase {
 				// read the csv file
 				BufferedReader br = null;
 				BufferedWriter bw = null;
+				//BufferedWriter bw2 = null;
 				
 				try{
-					br = new BufferedReader(new FileReader("src/main/java/LocationAvailability.csv"));
-					bw = new BufferedWriter(new FileWriter("src/main/java/LocationAvailability.csv",true));
+					br = new BufferedReader(new FileReader("src/main/java/LocationAvailability.csv"));					
+					bw = new BufferedWriter(new FileWriter("src/main/java/LocationList.csv",true));
+					//bw2 = new BufferedWriter(new FileWriter("src/main/java/LocationAvailability.csv"));
 					String line="";
 					String[] tempArr; // using this to store each column in a line
 
@@ -234,16 +245,22 @@ public class ReceivingServer extends ReceivingImplBase {
 
 						// get the location No where productNos are the same and available number is greater than 0
 						if(ProductNo.equals(prdctNo) && availableNum > 0) {
+							// set the locationNo
 							locatNo = locationNo;
-							// update LocationAvailability.csv (availableNum += 1)
+							
 							// update LocationList.csv (add this product data)
-							// update InventoryList.csv (totalQty += 1)
-							String outputLine = String.join(",",locationNo,String.valueOf(availableNum-1),ProductNo);
-							//line = line.replace(String.valueOf(availableNum), String.valueOf(availableNum-1));
+							String outputLine = String.join(",",indivNo,locatNo);
 							bw.write(outputLine);
-							System.out.println(outputLine);
-		                    bw.newLine();
-		                    bw.flush();
+							bw.newLine();
+							bw.flush();
+							
+							// update LocationAvailability.csv (availableNum += 1)
+							// update InventoryList.csv (totalQty += 1)
+							//String outputLine2 = String.join(",",locationNo,String.valueOf(availableNum-1),ProductNo);
+							////line = line.replace(String.valueOf(availableNum), String.valueOf(availableNum-1));
+							//bw2.write(outputLine2);
+		                    //bw2.newLine();
+		                    //bw2.flush();
 							break;
 						}
 					}
@@ -273,8 +290,7 @@ public class ReceivingServer extends ReceivingImplBase {
 			}
 
 			@Override
-			public void onError(Throwable t) {
-				
+			public void onError(Throwable t) {				
 				t.printStackTrace();				
 			}
 
@@ -284,11 +300,14 @@ public class ReceivingServer extends ReceivingImplBase {
 				
 				//completed too
 				responseObserver.onCompleted();
-			}
-			
+			}			
 		};
 	}
 
+		
+	/**
+	 * Method3 checkLocationAvailability
+	 */
 	@Override
 	public void checkLocationAvailability(LocationAvailRequest request,
 			StreamObserver<LocationAvailResponse> responseObserver) {
@@ -321,7 +340,6 @@ public class ReceivingServer extends ReceivingImplBase {
 				if(locationNo.equals(locatNo)) {
 					availNum = availableNum;
 				}
-
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -341,7 +359,6 @@ public class ReceivingServer extends ReceivingImplBase {
 		LocationAvailResponse reply = LocationAvailResponse.newBuilder().setAvailNum(availNum).build();
 		System.out.println("Reply availability: " + availNum);
 		responseObserver.onNext(reply);
-		responseObserver.onCompleted();
-		
+		responseObserver.onCompleted();		
 	}
 }
