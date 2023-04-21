@@ -175,7 +175,7 @@ public class ShippingClient {
 
 			@Override
 			public void onNext(UpdateLocResponse msg) {
-				System.out.println("receiving product location No: " + msg.getLocationNo() + ", Availability: "+ msg.getAvailNum() );
+				System.out.println("receiving product location No: " + msg.getLocationNo() );
 				count += 1;
 			}
 
@@ -193,16 +193,15 @@ public class ShippingClient {
 		};
 
 
-
 		StreamObserver<UpdateLocRequest> requestObserver = asyncStub.updateLocation(responseObserver);
 
 		try {
 
 			requestObserver.onNext(UpdateLocRequest.newBuilder().setProductIndivNo("A001-01").build());
 			requestObserver.onNext(UpdateLocRequest.newBuilder().setProductIndivNo("B001-01").build());
-			requestObserver.onNext(UpdateLocRequest.newBuilder().setProductIndivNo("C001-01").build());
-			requestObserver.onNext(UpdateLocRequest.newBuilder().setProductIndivNo("D001-01").build());
-			requestObserver.onNext(UpdateLocRequest.newBuilder().setProductIndivNo("E001-01").build());
+			//requestObserver.onNext(UpdateLocRequest.newBuilder().setProductIndivNo("C001-01").build());
+			//requestObserver.onNext(UpdateLocRequest.newBuilder().setProductIndivNo("D001-01").build());
+			//requestObserver.onNext(UpdateLocRequest.newBuilder().setProductIndivNo("E001-01").build());
 
 			// Mark the end of requests
 			requestObserver.onCompleted();

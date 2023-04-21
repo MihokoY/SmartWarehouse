@@ -17,7 +17,6 @@ private static final long serialVersionUID = 0L;
   }
   private UpdateLocResponse() {
     locationNo_ = "";
-    availNum_ = 0;
   }
 
   @java.lang.Override
@@ -48,11 +47,6 @@ private static final long serialVersionUID = 0L;
             java.lang.String s = input.readStringRequireUtf8();
 
             locationNo_ = s;
-            break;
-          }
-          case 16: {
-
-            availNum_ = input.readInt32();
             break;
           }
           default: {
@@ -121,15 +115,6 @@ private static final long serialVersionUID = 0L;
     }
   }
 
-  public static final int AVAILNUM_FIELD_NUMBER = 2;
-  private int availNum_;
-  /**
-   * <code>int32 availNum = 2;</code>
-   */
-  public int getAvailNum() {
-    return availNum_;
-  }
-
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -147,9 +132,6 @@ private static final long serialVersionUID = 0L;
     if (!getLocationNoBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, locationNo_);
     }
-    if (availNum_ != 0) {
-      output.writeInt32(2, availNum_);
-    }
     unknownFields.writeTo(output);
   }
 
@@ -161,10 +143,6 @@ private static final long serialVersionUID = 0L;
     size = 0;
     if (!getLocationNoBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, locationNo_);
-    }
-    if (availNum_ != 0) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(2, availNum_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -184,8 +162,6 @@ private static final long serialVersionUID = 0L;
     boolean result = true;
     result = result && getLocationNo()
         .equals(other.getLocationNo());
-    result = result && (getAvailNum()
-        == other.getAvailNum());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -199,8 +175,6 @@ private static final long serialVersionUID = 0L;
     hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + LOCATIONNO_FIELD_NUMBER;
     hash = (53 * hash) + getLocationNo().hashCode();
-    hash = (37 * hash) + AVAILNUM_FIELD_NUMBER;
-    hash = (53 * hash) + getAvailNum();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -336,8 +310,6 @@ private static final long serialVersionUID = 0L;
       super.clear();
       locationNo_ = "";
 
-      availNum_ = 0;
-
       return this;
     }
 
@@ -365,7 +337,6 @@ private static final long serialVersionUID = 0L;
     public s2.shipping.UpdateLocResponse buildPartial() {
       s2.shipping.UpdateLocResponse result = new s2.shipping.UpdateLocResponse(this);
       result.locationNo_ = locationNo_;
-      result.availNum_ = availNum_;
       onBuilt();
       return result;
     }
@@ -417,9 +388,6 @@ private static final long serialVersionUID = 0L;
       if (!other.getLocationNo().isEmpty()) {
         locationNo_ = other.locationNo_;
         onChanged();
-      }
-      if (other.getAvailNum() != 0) {
-        setAvailNum(other.getAvailNum());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -515,32 +483,6 @@ private static final long serialVersionUID = 0L;
   checkByteStringIsUtf8(value);
       
       locationNo_ = value;
-      onChanged();
-      return this;
-    }
-
-    private int availNum_ ;
-    /**
-     * <code>int32 availNum = 2;</code>
-     */
-    public int getAvailNum() {
-      return availNum_;
-    }
-    /**
-     * <code>int32 availNum = 2;</code>
-     */
-    public Builder setAvailNum(int value) {
-      
-      availNum_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>int32 availNum = 2;</code>
-     */
-    public Builder clearAvailNum() {
-      
-      availNum_ = 0;
       onChanged();
       return this;
     }

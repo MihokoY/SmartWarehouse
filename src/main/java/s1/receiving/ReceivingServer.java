@@ -33,7 +33,6 @@ public class ReceivingServer extends ReceivingImplBase {
 			System.out.println("Receiving Server started, listening on " + port);
 			server.awaitTermination();
 		} catch (IOException | InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}				
 	}
@@ -179,7 +178,6 @@ public class ReceivingServer extends ReceivingImplBase {
 					}				
 					
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} finally{
 					if(br!=null){
@@ -222,12 +220,10 @@ public class ReceivingServer extends ReceivingImplBase {
 				// read the csv file
 				BufferedReader br = null;
 				BufferedWriter bw = null;
-				//BufferedWriter bw2 = null;
 				
 				try{
 					br = new BufferedReader(new FileReader("src/main/java/LocationAvailability.csv"));					
 					bw = new BufferedWriter(new FileWriter("src/main/java/LocationList.csv",true));
-					//bw2 = new BufferedWriter(new FileWriter("src/main/java/LocationAvailability.csv"));
 					String line="";
 					String[] tempArr; // using this to store each column in a line
 
@@ -253,19 +249,10 @@ public class ReceivingServer extends ReceivingImplBase {
 							bw.write(outputLine);
 							bw.newLine();
 							bw.flush();
-							
-							// update LocationAvailability.csv (availableNum += 1)
-							// update InventoryList.csv (totalQty += 1)
-							//String outputLine2 = String.join(",",locationNo,String.valueOf(availableNum-1),ProductNo);
-							////line = line.replace(String.valueOf(availableNum), String.valueOf(availableNum-1));
-							//bw2.write(outputLine2);
-		                    //bw2.newLine();
-		                    //bw2.flush();
 							break;
 						}
 					}
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} finally{
 					if(br!=null){
@@ -284,8 +271,8 @@ public class ReceivingServer extends ReceivingImplBase {
 					}
 				}
 				
-				SetLocResponse reply = SetLocResponse.newBuilder().setProductIndivNo(indivNo).setLocationNo(locatNo).build();
-				
+				// set the response value
+				SetLocResponse reply = SetLocResponse.newBuilder().setProductIndivNo(indivNo).setLocationNo(locatNo).build();				
 				responseObserver.onNext(reply);
 			}
 
@@ -298,7 +285,7 @@ public class ReceivingServer extends ReceivingImplBase {
 			public void onCompleted() {
 				System.out.println("receiving setLocation method completed. ");
 				
-				//completed too
+				//completed
 				responseObserver.onCompleted();
 			}			
 		};
@@ -342,14 +329,12 @@ public class ReceivingServer extends ReceivingImplBase {
 				}
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally{
 			if(br!=null){
 				try {
 					br.close();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -359,6 +344,8 @@ public class ReceivingServer extends ReceivingImplBase {
 		LocationAvailResponse reply = LocationAvailResponse.newBuilder().setAvailNum(availNum).build();
 		System.out.println("Reply availability: " + availNum);
 		responseObserver.onNext(reply);
+		
+		//completed
 		responseObserver.onCompleted();		
 	}
 }

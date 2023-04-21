@@ -205,6 +205,7 @@ public class GUIAppS1 {
 			@Override
 			public void onCompleted() {
 				System.out.println("stream is completed.");
+				textResponse.append("\nstream is completed.");
 			}
 
 		};
@@ -304,6 +305,7 @@ public class GUIAppS1 {
 			@Override
 			public void onCompleted() {
 				System.out.println("stream is completed ... received "+ count+ " location numbers");
+				textResponse2.append("stream is completed.");
 			}
 
 		};

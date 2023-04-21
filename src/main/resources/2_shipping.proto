@@ -30,5 +30,4 @@ message UpdateLocRequest {
 
 message UpdateLocResponse {
 	string locationNo = 1;
-	int32 availNum = 2;
 }

@@ -1,11 +1,17 @@
 package s2.shipping;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetAddress;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Properties;
 
@@ -31,10 +37,8 @@ public class ShippingServer extends ShippingImplBase {
 			System.out.println("Shipping Server started, listening on " + port);
 			server.awaitTermination();
 		} catch (IOException | InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}		
-		
+		}				
 	}
 	
 	
@@ -64,6 +68,10 @@ public class ShippingServer extends ShippingImplBase {
 		return prop;
 	}
 	
+	
+	/**
+	 * Register jmDNS service
+	 */
 	private void registerService(Properties prop) {
 
 		try {
@@ -92,12 +100,14 @@ public class ShippingServer extends ShippingImplBase {
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 	
+	/**
+	 * Method1 checkShippingQuantity
+	 */
 	@Override
 	public StreamObserver<ShippingQtyRequest> checkShippingQuantity(
 			StreamObserver<ShippingQtyResponse> responseObserver) {
@@ -157,8 +167,7 @@ public class ShippingServer extends ShippingImplBase {
 									message = message.concat(ProductNo + " ");
 								}
 							}
-						}
-						
+						}						
 					}
 					
 					// set the message
@@ -172,30 +181,32 @@ public class ShippingServer extends ShippingImplBase {
 				
 					
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} finally{
 					if(br!=null){
 						try {
 							br.close();
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
 				}					
 
+				// set the response value
 				ShippingQtyResponse reply = ShippingQtyResponse.newBuilder().setMessage(message).build();
-
 				responseObserver.onNext(reply);
 
+				//completed
 				responseObserver.onCompleted();
 
 			}
-
 		};
 	}
 
+	
+	/**
+	 * Method2 updateLocation
+	 */
 	@Override
 	public StreamObserver<UpdateLocRequest> updateLocation(StreamObserver<UpdateLocResponse> responseObserver) {
 		return new StreamObserver<UpdateLocRequest> () {
@@ -207,17 +218,21 @@ public class ShippingServer extends ShippingImplBase {
 				
 				// set the default response value(locatNo)
 				String locatNo =  "";
-				// set the default response value(availNum)
-				int availNum =  0;
 				
 				// read the csv file
 				BufferedReader br = null;
+				BufferedWriter bw = null;
 				try{
 					br = new BufferedReader(new FileReader("src/main/java/LocationList.csv"));
+					bw = new BufferedWriter(new FileWriter("src/main/java/tmp_LocationList.csv"));
 					String line="";
 					String[] tempArr; // using this to store each column in a line
 
-					br.readLine(); // reading first line to avoid the header
+					// reading first line(header) and add into the temporary file 
+					String title = br.readLine(); 
+					bw.write(title);
+					bw.newLine();
+					bw.flush();
 
 					while((line = br.readLine()) != null){ // reading each line of file
 						tempArr = line.split(","); // each column has a comma between it
@@ -229,46 +244,24 @@ public class ShippingServer extends ShippingImplBase {
 
 						// get the location No where productNos are the same
 						if(indivNo.equals(productIndivNo)) {
+							// set the locationNo
 							locatNo = locationNo;
-							// update LocationAvailability.csv (availableNum -= 1)
-							// update LocationList.csv (delete this product data)
-							// update InventoryList.csv (totalQty -= 1)
-							break;
+							
+							// do not add this line into the temporary file to delete
+
+						}else {
+							// add this line into the temporary file
+							bw.write(line);
+							bw.newLine();
+							bw.flush();
 						}
 					}
-					
-					// get available number
-					br = new BufferedReader(new FileReader("src/main/java/LocationAvailability.csv"));
-					String line2="";
-					String[] tempArr2; // using this to store each column in a line
-
-					br.readLine(); // reading first line to avoid the header
-
-					while((line2 = br.readLine()) != null){ // reading each line of file
-						tempArr2 = line2.split(","); // each column has a comma between it
-
-						// first column
-						String locationNo = tempArr2[0];
-						// second column
-						int availableNum = Integer.parseInt(tempArr2[1]);
-						// third column
-						String ProductNo = tempArr2[2];
-
-						// get the available number where locationNos are the same
-						if(locatNo.equals(locationNo)) {
-							// reduce availableNum
-							availNum = availableNum - 1;
-							// update LocationAvailability.csv (availableNum += 1)
-							break;
-						}
-					}
-								
-					UpdateLocResponse reply = UpdateLocResponse.newBuilder().setLocationNo(locatNo).setAvailNum(availNum).build();
-				
-				responseObserver.onNext(reply);
+							
+					// set the response value
+					UpdateLocResponse reply = UpdateLocResponse.newBuilder().setLocationNo(locatNo).build();				
+					responseObserver.onNext(reply);
 				
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} finally{
 					if(br!=null){
@@ -278,12 +271,27 @@ public class ShippingServer extends ShippingImplBase {
 							e.printStackTrace();
 						}
 					}
+					if(bw!=null){
+						try {
+							bw.close();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+				
+				// Update LocationList.csv (copy from the temporary file)
+				Path original  = Paths.get("src/main/java/LocationList.csv");
+				Path temp  = Paths.get("src/main/java/tmp_LocationList.csv");
+				try {
+					Files.copy(temp, original, StandardCopyOption.REPLACE_EXISTING);
+				} catch (IOException e) {
+					e.printStackTrace();
 				}
 			}
 
 			@Override
-			public void onError(Throwable t) {
-				
+			public void onError(Throwable t) {				
 				t.printStackTrace();				
 			}
 
@@ -291,10 +299,9 @@ public class ShippingServer extends ShippingImplBase {
 			public void onCompleted() {
 				System.out.println("receiving setLocation method completed. ");
 				
-				//completed too
+				//completed
 				responseObserver.onCompleted();
-			}
-			
+			}			
 		};
 	}
 }

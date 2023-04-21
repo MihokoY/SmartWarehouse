@@ -16,9 +16,4 @@ public interface UpdateLocResponseOrBuilder extends
    */
   com.google.protobuf.ByteString
       getLocationNoBytes();
-
-  /**
-   * <code>int32 availNum = 2;</code>
-   */
-  int getAvailNum();
 }

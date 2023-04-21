@@ -47,14 +47,13 @@ public final class ShippingImpl {
       "QtyRequest\022\021\n\tproductNo\030\001 \001(\t\022\023\n\013shippin" +
       "gQty\030\002 \001(\005\"&\n\023ShippingQtyResponse\022\017\n\007mes" +
       "sage\030\001 \001(\t\"*\n\020UpdateLocRequest\022\026\n\016produc" +
-      "tIndivNo\030\001 \001(\t\"9\n\021UpdateLocResponse\022\022\n\nl" +
-      "ocationNo\030\001 \001(\t\022\020\n\010availNum\030\002 \001(\0052\265\001\n\010Sh" +
-      "ipping\022X\n\025checkShippingQuantity\022\034.shippi" +
-      "ng.ShippingQtyRequest\032\035.shipping.Shippin" +
-      "gQtyResponse\"\000(\001\022O\n\016updateLocation\022\032.shi" +
-      "pping.UpdateLocRequest\032\033.shipping.Update" +
-      "LocResponse\"\000(\0010\001B\035\n\013s2.shippingB\014Shippi" +
-      "ngImplP\001b\006proto3"
+      "tIndivNo\030\001 \001(\t\"\'\n\021UpdateLocResponse\022\022\n\nl" +
+      "ocationNo\030\001 \001(\t2\265\001\n\010Shipping\022X\n\025checkShi" +
+      "ppingQuantity\022\034.shipping.ShippingQtyRequ" +
+      "est\032\035.shipping.ShippingQtyResponse\"\000(\001\022O" +
+      "\n\016updateLocation\022\032.shipping.UpdateLocReq" +
+      "uest\032\033.shipping.UpdateLocResponse\"\000(\0010\001B" +
+      "\035\n\013s2.shippingB\014ShippingImplP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -91,7 +90,7 @@ public final class ShippingImpl {
     internal_static_shipping_UpdateLocResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_shipping_UpdateLocResponse_descriptor,
-        new java.lang.String[] { "LocationNo", "AvailNum", });
+        new java.lang.String[] { "LocationNo", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)
