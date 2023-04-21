@@ -98,7 +98,7 @@ public class InventoryClient {
 			});
 
 			// Wait a bit
-			Thread.sleep(2000);
+			Thread.sleep(1000);
 
 			jmdns.close();
 

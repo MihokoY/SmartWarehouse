@@ -20,6 +20,7 @@ import javax.swing.JTextArea;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import io.grpc.stub.StreamObserver;
 import s1.receiving.ReceivingGrpc.ReceivingBlockingStub;
 import s1.receiving.ReceivingGrpc.ReceivingStub;
 
@@ -27,6 +28,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Random;
 import java.awt.event.ActionEvent;
 
 public class GUIAppS1 {
@@ -46,7 +48,9 @@ public class GUIAppS1 {
 	private JTextArea textResponse2;
 	private JTextArea textResponse3;
 
-	//Launch the application
+	/**
+	 * Launch the application
+	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -61,7 +65,9 @@ public class GUIAppS1 {
 	}
 
 
-	//Create the application
+	/**
+	 * Create the application
+	 */
 	public GUIAppS1() {
 		
 		String receiving_service_type = "_receiving._tcp.local.";
@@ -84,8 +90,9 @@ public class GUIAppS1 {
 		initialize();
 	}
 
-	
-	
+	/**
+	 * Discover service
+	 */
 	private void discoverReceivingService(String service_type) {
 				
 		try {
@@ -151,8 +158,8 @@ public class GUIAppS1 {
 		
 		frame.getContentPane().setLayout(bl);
 		
-		/* Method 1 */
-		// title
+		/* Method1 checkReceivedQuantity */
+		// Title
 		JPanel name1 = new JPanel();
 		frame.getContentPane().add(name1);
 		name1.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -160,12 +167,13 @@ public class GUIAppS1 {
 		JLabel methodName1 = new JLabel("1. Check Received Quantity");		
 		name1.add(methodName1);
 		
-		// request & response
+		// Request & Response
 		JPanel panel_1 = new JPanel();
 		frame.getContentPane().add(panel_1);
-		panel_1.setPreferredSize(new Dimension(200, 80));
+		panel_1.setPreferredSize(new Dimension(550, 80));
 		panel_1.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
 		
+		// Request1
 		JLabel lblNewLabel_1 = new JLabel("productNo");
 		panel_1.add(lblNewLabel_1);
 		
@@ -173,6 +181,7 @@ public class GUIAppS1 {
 		panel_1.add(textNumber1);
 		textNumber1.setColumns(10);
 		
+		// Request2
 		JLabel lblNewLabel_2 = new JLabel("receivedQty");
 		panel_1.add(lblNewLabel_2);
 		
@@ -180,60 +189,72 @@ public class GUIAppS1 {
 		panel_1.add(textNumber2);
 		textNumber2.setColumns(10);
 	
+		// Response
+		StreamObserver<ReceivedQtyResponse> responseObserver = new StreamObserver<ReceivedQtyResponse>() {
+
+			@Override
+			public void onNext(ReceivedQtyResponse msg) {
+				System.out.println("receiving message: " + msg.getMessage() );
+				textResponse.append("receiving message: " + msg.getMessage());
+			}
+
+			@Override
+			public void onError(Throwable t) {
+				t.printStackTrace();
+			}
+
+			@Override
+			public void onCompleted() {
+				System.out.println("stream is completed.");
+			}
+
+		};
 		
+		// Request
+		StreamObserver<ReceivedQtyRequest> requestObserver = asyncStub.checkReceivedQuantity(responseObserver);
+		
+		// Send button to send the requests
 		JButton btnCalculate = new JButton("Send");
 		btnCalculate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				String num1 = textNumber1.getText();
 				int num2 = Integer.parseInt(textNumber2.getText());
+								
+				requestObserver.onNext(ReceivedQtyRequest.newBuilder().setProductNo(num1).setReceivedQty(num2).build());
 				
-				ReceivedQtyRequest req = ReceivedQtyRequest.newBuilder().setProductNo(num1).setReceivedQty(num2).build();
-
-				//ReceivedQtyResponse response = blockingStub.checkReceivedQuantity(req);
-				
-				
-				//textResponse.append("Request Location No: "+ req.getLocationNo() + "\nAvailability: "+ response.getAvailNum() + "\n");
-				
-				//System.out.println("res: " + response.getResult() + " mes: " + response.getMessage());
-
+				// reset the text field
+				textNumber1.setText("");
+				textNumber2.setText("");
 			}
 		});
+		
 		panel_1.add(btnCalculate);
 		
+		// Completed button to complete the requests
 		JButton btnCalculate1_2 = new JButton("Completed");
 		btnCalculate1_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				String num1 = textNumber1.getText();
-				int num2 = Integer.parseInt(textNumber2.getText());
-				
-				ReceivedQtyRequest req = ReceivedQtyRequest.newBuilder().setProductNo(num1).setReceivedQty(num2).build();
-
-				//ReceivedQtyResponse response = blockingStub.checkReceivedQuantity(req);
-				
-				
-				//textResponse.append("Request Location No: "+ req.getLocationNo() + "\nAvailability: "+ response.getAvailNum() + "\n");
-				
-				//System.out.println("res: " + response.getResult() + " mes: " + response.getMessage());
-
+				// Mark the end of requests
+				requestObserver.onCompleted();				
 			}
 		});
 		panel_1.add(btnCalculate1_2);
 		
+		// Text area for display the response message
 		textResponse = new JTextArea(3, 50);
 		textResponse .setLineWrap(true);
 		textResponse.setWrapStyleWord(true);
 		
 		JScrollPane scrollPane = new JScrollPane(textResponse);
 		
-		//textResponse.setSize(new Dimension(15, 30));
 		panel_1.add(scrollPane);
 		
 		
 		
-		/* Method 2 */
-		// title
+		/* Method2 setLocation */
+		// Title
 		JPanel name2 = new JPanel();
 		frame.getContentPane().add(name2);
 		name2.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -250,36 +271,77 @@ public class GUIAppS1 {
 		JLabel lblNewLabel_3 = new JLabel("locationNo");
 		panel_2.add(lblNewLabel_3);
 		
-		textNumber1 = new JTextField();
-		panel_2.add(textNumber1);
-		textNumber1.setColumns(10);
+		textNumber3 = new JTextField();
+		panel_2.add(textNumber3);
+		textNumber3.setColumns(10);
 		
-		//JLabel lblNewLabel_2 = new JLabel("Number 2");
-		//panel_service_1.add(lblNewLabel_2);
+		JLabel lblNewLabel_4 = new JLabel("productIndivNo");
+		panel_2.add(lblNewLabel_4);
 		
-		//textNumber2 = new JTextField();
-		//panel_service_1.add(textNumber2);
-		//textNumber2.setColumns(10);
+		textNumber4 = new JTextField();
+		panel_2.add(textNumber4);
+		textNumber4.setColumns(10);
 	
 		
 		JButton btnCalculate2 = new JButton("Send");
 		btnCalculate2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				String num1 = textNumber1.getText();
-				//int num2 = Integer.parseInt(textNumber2.getText());
+				String num3 = textNumber3.getText();
+				String num4 = textNumber4.getText();
 
-				//int index = comboOperation.getSelectedIndex();
-				//Operation operation = Operation.forNumber(index);
-				
-				LocationAvailRequest req = LocationAvailRequest.newBuilder().setLocationNo(num1).build();
+				StreamObserver<SetLocResponse> responseObserver = new StreamObserver<SetLocResponse>() {
 
-				LocationAvailResponse response = blockingStub.checkLocationAvailability(req);
+					int count =0 ;
 
-				textResponse.append("Request Location No: "+ req.getLocationNo() + "\nAvailability: "+ response.getAvailNum() + "\n");
-				
-				//System.out.println("res: " + response.getResult() + " mes: " + response.getMessage());
+					@Override
+					public void onNext(SetLocResponse msg) {
+						System.out.println("receiving product indivisual No: " + msg.getProductIndivNo() + ", location No: "+ msg.getLocationNo() );
+						count += 1;
+					}
 
+					@Override
+					public void onError(Throwable t) {
+						t.printStackTrace();
+
+					}
+
+					@Override
+					public void onCompleted() {
+						System.out.println("stream is completed ... received "+ count+ " location numbers");
+					}
+
+				};
+
+
+
+				StreamObserver<SetLocRequest> requestObserver = asyncStub.setLocation(responseObserver);
+
+				try {
+
+					requestObserver.onNext(SetLocRequest.newBuilder().setProductNo(num3).setProductIndivNo(num4).build());
+					
+					// Mark the end of requests
+					requestObserver.onCompleted();
+
+					// Sleep for a bit before sending the next one.
+					Thread.sleep(new Random().nextInt(1000) + 500);
+
+
+				} catch (RuntimeException e1) {
+					e1.printStackTrace();
+				} catch (InterruptedException e1) {			
+					e1.printStackTrace();
+				}
+
+
+
+				try {
+					Thread.sleep(15000);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		panel_2.add(btnCalculate2);
@@ -294,8 +356,8 @@ public class GUIAppS1 {
 		
 
 		
-		/* Method 3 */
-		// title
+		/* Method3 checkLocationAvailability */
+		// Title
 		JPanel name3 = new JPanel();
 		frame.getContentPane().add(name3);
 		name3.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -316,7 +378,7 @@ public class GUIAppS1 {
 		panel_3.add(textNumber5);
 		textNumber5.setColumns(10);
 	
-		
+		// Check button to send the request and get the response
 		JButton btnCalculate3 = new JButton("Check");
 		btnCalculate3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -335,6 +397,7 @@ public class GUIAppS1 {
 		});
 		panel_3.add(btnCalculate3);
 		
+		// Text area for display the response message
 		textResponse3 = new JTextArea(3, 50);
 		textResponse3.setLineWrap(true);
 		textResponse3.setWrapStyleWord(true);

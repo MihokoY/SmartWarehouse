@@ -14,14 +14,10 @@ import java.util.Locale;
 import java.util.Properties;
 
 import javax.jmdns.JmDNS;
-import javax.jmdns.ServiceEvent;
 import javax.jmdns.ServiceInfo;
-import javax.jmdns.ServiceListener;
-
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
-import s1.receiving.ReceivingServer.Listener;
 import s3.inventory.InventoryGrpc.InventoryImplBase;
 
 public class InventoryServer extends InventoryImplBase {
@@ -57,10 +53,10 @@ public class InventoryServer extends InventoryImplBase {
 
 			// get the property value and print it out
 			System.out.println("Inventory Service properies ...");
-			System.out.println("\t service1_type: " + prop.getProperty("service3_type"));
-			System.out.println("\t service1_name: " +prop.getProperty("service3_name"));
-			System.out.println("\t service1_description: " +prop.getProperty("service3_description"));
-			System.out.println("\t service1_port: " +prop.getProperty("service3_port"));
+			System.out.println("\t service3_type: " + prop.getProperty("service3_type"));
+			System.out.println("\t service3_name: " +prop.getProperty("service3_name"));
+			System.out.println("\t service3_description: " +prop.getProperty("service3_description"));
+			System.out.println("\t service3_port: " +prop.getProperty("service3_port"));
 
 		} catch (IOException ex) {
 			ex.printStackTrace();
@@ -87,9 +83,6 @@ public class InventoryServer extends InventoryImplBase {
 			jmdns.registerService(serviceInfo);
 
 			System.out.printf("registrering service with type %s and name %s \n", service_type, service_name);
-
-			//Service discovery
-			jmdns.addServiceListener(service_type, new Listener());
 			
 			// Wait for a bit
 			Thread.sleep(1000);
@@ -102,25 +95,6 @@ public class InventoryServer extends InventoryImplBase {
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-	}
-	
-	// Discovery service
-	public static class Listener implements ServiceListener {
-
-		@Override
-		public void serviceAdded(ServiceEvent event) {
-			System.out.println("Service added: " + event.getInfo());
-		}
-
-		@Override
-		public void serviceRemoved(ServiceEvent event) {
-			System.out.println("Service removed: " + event.getInfo());
-		}
-
-		@Override
-		public void serviceResolved(ServiceEvent event) {
-			System.out.println("Service resolved: " + event.getInfo());
 		}
 	}
 	

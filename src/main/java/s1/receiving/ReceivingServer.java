@@ -12,10 +12,7 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import javax.jmdns.JmDNS;
-import javax.jmdns.ServiceEvent;
 import javax.jmdns.ServiceInfo;
-import javax.jmdns.ServiceListener;
-
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
@@ -83,9 +80,6 @@ public class ReceivingServer extends ReceivingImplBase {
 			jmdns.registerService(serviceInfo);
 
 			System.out.printf("registrering service with type %s and name %s \n", service_type, service_name);
-
-			//Service discovery
-			jmdns.addServiceListener(service_type, new Listener());
 			
 			// Wait for a bit
 			Thread.sleep(1000);
@@ -101,25 +95,6 @@ public class ReceivingServer extends ReceivingImplBase {
 		}
 	}
 	
-	// Discovery service
-	public static class Listener implements ServiceListener {
-
-		@Override
-		public void serviceAdded(ServiceEvent event) {
-			System.out.println("Service added: " + event.getInfo());
-		}
-
-		@Override
-		public void serviceRemoved(ServiceEvent event) {
-			System.out.println("Service removed: " + event.getInfo());
-		}
-
-		@Override
-		public void serviceResolved(ServiceEvent event) {
-			System.out.println("Service resolved: " + event.getInfo());
-		}
-	}
-
 	
 	//Method1 checkReceivedQuantity
 	@Override

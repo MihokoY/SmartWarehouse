@@ -10,10 +10,7 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import javax.jmdns.JmDNS;
-import javax.jmdns.ServiceEvent;
 import javax.jmdns.ServiceInfo;
-import javax.jmdns.ServiceListener;
-
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
@@ -51,10 +48,10 @@ public class ShippingServer extends ShippingImplBase {
 
 			// get the property value and print it out
 			System.out.println("Shipping Service properies ...");
-			System.out.println("\t service1_type: " + prop.getProperty("service2_type"));
-			System.out.println("\t service1_name: " +prop.getProperty("service2_name"));
-			System.out.println("\t service1_description: " +prop.getProperty("service2_description"));
-			System.out.println("\t service1_port: " +prop.getProperty("service2_port"));
+			System.out.println("\t service2_type: " + prop.getProperty("service2_type"));
+			System.out.println("\t service2_name: " +prop.getProperty("service2_name"));
+			System.out.println("\t service2_description: " +prop.getProperty("service2_description"));
+			System.out.println("\t service2_port: " +prop.getProperty("service2_port"));
 
 		} catch (IOException ex) {
 			ex.printStackTrace();
@@ -81,9 +78,6 @@ public class ShippingServer extends ShippingImplBase {
 			jmdns.registerService(serviceInfo);
 
 			System.out.printf("registrering service with type %s and name %s \n", service_type, service_name);
-
-			//Service discovery
-			jmdns.addServiceListener(service_type, new Listener());
 			
 			// Wait for a bit
 			Thread.sleep(1000);
@@ -96,25 +90,6 @@ public class ShippingServer extends ShippingImplBase {
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-	}
-	
-	// Discovery service
-	public static class Listener implements ServiceListener {
-
-		@Override
-		public void serviceAdded(ServiceEvent event) {
-			System.out.println("Service added: " + event.getInfo());
-		}
-
-		@Override
-		public void serviceRemoved(ServiceEvent event) {
-			System.out.println("Service removed: " + event.getInfo());
-		}
-
-		@Override
-		public void serviceResolved(ServiceEvent event) {
-			System.out.println("Service resolved: " + event.getInfo());
 		}
 	}
 

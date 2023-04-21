@@ -27,14 +27,14 @@ public class ShippingClient {
 	
 	public static void main(String[] args) {
 		
-		//String shipping_service_type = "_shipping._tcp.local.";
-		//discoverShippingService(shipping_service_type);
+		String shipping_service_type = "_ship._tcp.local.";
+		discoverShippingService(shipping_service_type);
 		
-		//String host = ShippingInfo.getHostAddresses()[0];
-		//int port = ShippingInfo.getPort();
+		String host = ShippingInfo.getHostAddresses()[0];
+		int port = ShippingInfo.getPort();
 		
-		String host = "localhost";
-		int port = 50052;
+		//String host = "localhost";
+		//int port = 50052;
 		
 		ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
 		
@@ -98,7 +98,7 @@ public class ShippingClient {
 			});
 
 			// Wait a bit
-			Thread.sleep(2000);
+			Thread.sleep(1000);
 
 			jmdns.close();
 
@@ -111,6 +111,7 @@ public class ShippingClient {
 			e.printStackTrace();
 		}
 	}
+	
 	
 	public static void checkShippingQuantity() {
 
