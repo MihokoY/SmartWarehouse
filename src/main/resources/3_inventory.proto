@@ -44,5 +44,4 @@ message OrderHisRequest {
 
 message OrderHisResponse {
 	int32 totalQty = 1;
-	float totalPrice = 2;
 }

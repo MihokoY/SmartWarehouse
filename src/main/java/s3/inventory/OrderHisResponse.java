@@ -17,7 +17,6 @@ private static final long serialVersionUID = 0L;
   }
   private OrderHisResponse() {
     totalQty_ = 0;
-    totalPrice_ = 0F;
   }
 
   @java.lang.Override
@@ -47,11 +46,6 @@ private static final long serialVersionUID = 0L;
           case 8: {
 
             totalQty_ = input.readInt32();
-            break;
-          }
-          case 21: {
-
-            totalPrice_ = input.readFloat();
             break;
           }
           default: {
@@ -95,15 +89,6 @@ private static final long serialVersionUID = 0L;
     return totalQty_;
   }
 
-  public static final int TOTALPRICE_FIELD_NUMBER = 2;
-  private float totalPrice_;
-  /**
-   * <code>float totalPrice = 2;</code>
-   */
-  public float getTotalPrice() {
-    return totalPrice_;
-  }
-
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -121,9 +106,6 @@ private static final long serialVersionUID = 0L;
     if (totalQty_ != 0) {
       output.writeInt32(1, totalQty_);
     }
-    if (totalPrice_ != 0F) {
-      output.writeFloat(2, totalPrice_);
-    }
     unknownFields.writeTo(output);
   }
 
@@ -136,10 +118,6 @@ private static final long serialVersionUID = 0L;
     if (totalQty_ != 0) {
       size += com.google.protobuf.CodedOutputStream
         .computeInt32Size(1, totalQty_);
-    }
-    if (totalPrice_ != 0F) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeFloatSize(2, totalPrice_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -159,10 +137,6 @@ private static final long serialVersionUID = 0L;
     boolean result = true;
     result = result && (getTotalQty()
         == other.getTotalQty());
-    result = result && (
-        java.lang.Float.floatToIntBits(getTotalPrice())
-        == java.lang.Float.floatToIntBits(
-            other.getTotalPrice()));
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -176,9 +150,6 @@ private static final long serialVersionUID = 0L;
     hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + TOTALQTY_FIELD_NUMBER;
     hash = (53 * hash) + getTotalQty();
-    hash = (37 * hash) + TOTALPRICE_FIELD_NUMBER;
-    hash = (53 * hash) + java.lang.Float.floatToIntBits(
-        getTotalPrice());
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -314,8 +285,6 @@ private static final long serialVersionUID = 0L;
       super.clear();
       totalQty_ = 0;
 
-      totalPrice_ = 0F;
-
       return this;
     }
 
@@ -343,7 +312,6 @@ private static final long serialVersionUID = 0L;
     public s3.inventory.OrderHisResponse buildPartial() {
       s3.inventory.OrderHisResponse result = new s3.inventory.OrderHisResponse(this);
       result.totalQty_ = totalQty_;
-      result.totalPrice_ = totalPrice_;
       onBuilt();
       return result;
     }
@@ -394,9 +362,6 @@ private static final long serialVersionUID = 0L;
       if (other == s3.inventory.OrderHisResponse.getDefaultInstance()) return this;
       if (other.getTotalQty() != 0) {
         setTotalQty(other.getTotalQty());
-      }
-      if (other.getTotalPrice() != 0F) {
-        setTotalPrice(other.getTotalPrice());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -449,32 +414,6 @@ private static final long serialVersionUID = 0L;
     public Builder clearTotalQty() {
       
       totalQty_ = 0;
-      onChanged();
-      return this;
-    }
-
-    private float totalPrice_ ;
-    /**
-     * <code>float totalPrice = 2;</code>
-     */
-    public float getTotalPrice() {
-      return totalPrice_;
-    }
-    /**
-     * <code>float totalPrice = 2;</code>
-     */
-    public Builder setTotalPrice(float value) {
-      
-      totalPrice_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>float totalPrice = 2;</code>
-     */
-    public Builder clearTotalPrice() {
-      
-      totalPrice_ = 0F;
       onChanged();
       return this;
     }

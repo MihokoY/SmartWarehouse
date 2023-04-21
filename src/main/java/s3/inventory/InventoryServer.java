@@ -1,8 +1,10 @@
 package s3.inventory;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetAddress;
@@ -36,12 +38,15 @@ public class InventoryServer extends InventoryImplBase {
 			System.out.println("Inventory Server started, listening on " + port);
 			server.awaitTermination();
 		} catch (IOException | InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
 		
 	}
 	
+	
+	/**
+	 * Get properties
+	 */
 	private Properties getProperties() {
 
 		Properties prop = null;
@@ -65,6 +70,10 @@ public class InventoryServer extends InventoryImplBase {
 		return prop;
 	}
 	
+	
+	/**
+	 * Register jmDNS service
+	 */
 	private void registerService(Properties prop) {
 
 		try {
@@ -93,12 +102,14 @@ public class InventoryServer extends InventoryImplBase {
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
 
+	/**
+	 * Method1 checkInventoryQuantity
+	 */
 	@Override
 	public void checkInventoryQuantity(InventoryQtyRequest request,
 			StreamObserver<InventoryQtyResponse> responseObserver) {
@@ -111,6 +122,7 @@ public class InventoryServer extends InventoryImplBase {
 		
 		//import the csv file
 		BufferedReader br = null;
+		
 		try{
 			br = new BufferedReader(new FileReader("src/main/java/InventoryList.csv"));
 			String line="";
@@ -133,39 +145,40 @@ public class InventoryServer extends InventoryImplBase {
 			}		
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally{
 			if(br!=null){
 				try {
 					br.close();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
 		}
 		
+		// response all productNos
 		for(int i=0; i<productNos.size(); i++) {
 
+			// set the response value
 			InventoryQtyResponse reply = InventoryQtyResponse.newBuilder().setProductNo(productNos.get(i)).build();
-
 			responseObserver.onNext(reply);
 
 			try {
 				//wait for a second
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 
+		//completed
 		responseObserver.onCompleted();
 	}
 
 	
-	
+	/**
+	 * Method2 order
+	 */
 	@Override
 	public StreamObserver<OrderRequest> order(StreamObserver<OrderResponse> responseObserver) {
 		
@@ -174,6 +187,7 @@ public class InventoryServer extends InventoryImplBase {
 			@Override
 			public void onNext(OrderRequest or) {
 				
+				// get the requests
 				String prdctNo = or.getProductNo();
 				int orderQty = or.getOrderQty();
 				System.out.println("receiving order method productNo: " + prdctNo + " orderQty: " + orderQty);
@@ -181,10 +195,13 @@ public class InventoryServer extends InventoryImplBase {
 				// set the default response value(locatNo)
 				int afterQty = 0;
 				
-				// read the csv file
+				// import the csv file
 				BufferedReader br = null;
+				BufferedWriter bw = null;
+				
 				try{
 					br = new BufferedReader(new FileReader("src/main/java/InventoryList.csv"));
+					bw = new BufferedWriter(new FileWriter("src/main/java/OrderList.csv",true));
 					String line="";
 					String[] tempArr; // using this to store each column in a line
 
@@ -200,25 +217,38 @@ public class InventoryServer extends InventoryImplBase {
 
 						// set the afterQty where productNos are the same
 						if(ProductNo.equals(prdctNo)) {
+							// set the afterQty
 							afterQty = TotalQty + orderQty;
+							
 							// update OrderList.csv (add this order data)
+							SimpleDateFormat ft = new SimpleDateFormat ("dd/MM/yyyy",Locale.UK);							
+							Date today = new Date();;
+							String outputLine = String.join(",",ft.format(today),ProductNo,Integer.toString(orderQty));
+							bw.write(outputLine);
+							bw.newLine();
+							bw.flush();
 							break;
 						}
 					}			
 				
-				OrderResponse reply = OrderResponse.newBuilder().setProductNo(prdctNo).setOrderQty(orderQty).setAfterQty(afterQty).build();
-				
+				// set the response value
+				OrderResponse reply = OrderResponse.newBuilder().setProductNo(prdctNo).setOrderQty(orderQty).setAfterQty(afterQty).build();				
 				responseObserver.onNext(reply);
 				
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} finally{
 					if(br!=null){
 						try {
 							br.close();
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					if(bw!=null){
+						try {
+							bw.close();
+						} catch (IOException e) {
 							e.printStackTrace();
 						}
 					}
@@ -234,15 +264,16 @@ public class InventoryServer extends InventoryImplBase {
 			public void onCompleted() {
 				System.out.println("receiving order method completed. ");
 				
-				//completed too
+				//completed
 				responseObserver.onCompleted();
-			}
-			
+			}		
 		};
 	}
 
-	
 
+	/**
+	 * Method3 orderHistory
+	 */
 	@Override
 	public void orderHistory(OrderHisRequest request, StreamObserver<OrderHisResponse> responseObserver) {
 		
@@ -257,14 +288,12 @@ public class InventoryServer extends InventoryImplBase {
 			startDate = ft.parse(request.getStartDate());
 			endDate = ft.parse(request.getEndDate());
 		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		String productNo = request.getProductNo();
 		
 		// set the default response value(availNum)
 		int totalQty = 0;
-		float totalPrice = 0;
 		
 		//import the csv file
 		BufferedReader br = null;
@@ -284,33 +313,31 @@ public class InventoryServer extends InventoryImplBase {
 				String prdctNo = tempArr[1];
 				// Third column
 				int orderQty = Integer.parseInt(tempArr[2]);
-				// Fourth column
-				float totalPrc = Float.parseFloat(tempArr[3]);
 					
 				// add totalQty and totalPrice where productNo and date are match
 				if(productNo.equals(prdctNo) && date.compareTo(startDate)>=0 && date.compareTo(endDate)<=0) {					
 					totalQty = totalQty + orderQty;
-					totalPrice = totalPrice + totalPrc;
 				}				
 			}		
 			
 		} catch (IOException | ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally{
 			if(br!=null){
 				try {
 					br.close();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
 		}
 
-		OrderHisResponse reply = OrderHisResponse.newBuilder().setTotalQty(totalQty).setTotalPrice(totalPrice).build();
-		System.out.println("Reply totalQty: " + totalQty + ", Reply totalQty: " + totalPrice);
+		// set the response value
+		OrderHisResponse reply = OrderHisResponse.newBuilder().setTotalQty(totalQty).build();
+		System.out.println("Reply totalQty: " + totalQty);
 		responseObserver.onNext(reply);
+		
+		//completed
 		responseObserver.onCompleted();
 	}
 }

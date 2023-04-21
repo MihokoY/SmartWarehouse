@@ -11,9 +11,4 @@ public interface OrderHisResponseOrBuilder extends
    * <code>int32 totalQty = 1;</code>
    */
   int getTotalQty();
-
-  /**
-   * <code>float totalPrice = 2;</code>
-   */
-  float getTotalPrice();
 }

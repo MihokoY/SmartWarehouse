@@ -3,6 +3,7 @@ package s3.inventory;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Iterator;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -112,7 +113,8 @@ public class InventoryClient {
 		}
 	}
 	
-	
+	/*
+	// checkInventoryQuantity(asyncStub)
 	public static void checkInventoryQuantity() {
 
 		InventoryQtyRequest request = InventoryQtyRequest.newBuilder().setTotalQty(10).build();
@@ -148,6 +150,25 @@ public class InventoryClient {
 			e.printStackTrace();
 		}
 	}
+	*/
+	
+	// checkInventoryQuantity(blockingStub)
+	public static void checkInventoryQuantity() {
+		InventoryQtyRequest request = InventoryQtyRequest.newBuilder().setTotalQty(10).build();
+
+		try {
+			Iterator<InventoryQtyResponse> responces = blockingStub.checkInventoryQuantity(request);
+
+			while(responces.hasNext()) {
+				InventoryQtyResponse temp = responces.next();
+				System.out.println("receiving product No: " + temp.getProductNo());				
+			}
+
+		} catch (StatusRuntimeException e) {
+			e.printStackTrace();
+		}
+
+	}
 	
 	
 	public static void order() {
@@ -179,11 +200,11 @@ public class InventoryClient {
 
 		try {
 
-			requestObserver.onNext(OrderRequest.newBuilder().setProductNo("A001").setOrderQty(10).build());
-			requestObserver.onNext(OrderRequest.newBuilder().setProductNo("B001").setOrderQty(10).build());
-			requestObserver.onNext(OrderRequest.newBuilder().setProductNo("C001").setOrderQty(10).build());
-			requestObserver.onNext(OrderRequest.newBuilder().setProductNo("D001").setOrderQty(10).build());
-			requestObserver.onNext(OrderRequest.newBuilder().setProductNo("E001").setOrderQty(10).build());
+			requestObserver.onNext(OrderRequest.newBuilder().setProductNo("A001").setOrderQty(100).build());
+			//requestObserver.onNext(OrderRequest.newBuilder().setProductNo("B001").setOrderQty(10).build());
+			//requestObserver.onNext(OrderRequest.newBuilder().setProductNo("C001").setOrderQty(10).build());
+			//requestObserver.onNext(OrderRequest.newBuilder().setProductNo("D001").setOrderQty(10).build());
+			//requestObserver.onNext(OrderRequest.newBuilder().setProductNo("E001").setOrderQty(10).build());
 
 			// Mark the end of requests
 			requestObserver.onCompleted();
@@ -218,7 +239,7 @@ public class InventoryClient {
 		OrderHisResponse response = blockingStub.orderHistory(req);
 
 		System.out.println("productNo: " + productNo + ", Duration: " + startDate + " - " + endDate
-							+ ", totalQty: " + response.getTotalQty()+ ", totalPrice: " + response.getTotalPrice());
+							+ ", totalQty: " + response.getTotalQty());
 		
 	}
 }
