@@ -28,7 +28,6 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.Random;
 import java.awt.event.ActionEvent;
 
 public class GUIAppS1 {
@@ -262,19 +261,21 @@ public class GUIAppS1 {
 		JLabel methodName2 = new JLabel("2. Set Location");		
 		name2.add(methodName2);
 		
-		// request & response
+		// Request & Response
 		JPanel panel_2 = new JPanel();
 		frame.getContentPane().add(panel_2);
 		panel_2.setPreferredSize(new Dimension(200, 80));
 		panel_2.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
 		
-		JLabel lblNewLabel_3 = new JLabel("locationNo");
+		// Request1
+		JLabel lblNewLabel_3 = new JLabel("productNo");
 		panel_2.add(lblNewLabel_3);
 		
 		textNumber3 = new JTextField();
 		panel_2.add(textNumber3);
 		textNumber3.setColumns(10);
 		
+		// Request2
 		JLabel lblNewLabel_4 = new JLabel("productIndivNo");
 		panel_2.add(lblNewLabel_4);
 		
@@ -282,70 +283,68 @@ public class GUIAppS1 {
 		panel_2.add(textNumber4);
 		textNumber4.setColumns(10);
 	
+		// Response
+		StreamObserver<SetLocResponse> responseObserver2 = new StreamObserver<SetLocResponse>() {
+
+			int count =0 ;
+
+			@Override
+			public void onNext(SetLocResponse msg) {
+				System.out.println("receiving product indivisual No: " + msg.getProductIndivNo() + ", location No: "+ msg.getLocationNo() );
+				textResponse2.append("receiving product indivisual No: " + msg.getProductIndivNo() + ", location No: "+ msg.getLocationNo() + "\n");
+				count += 1;
+			}
+
+			@Override
+			public void onError(Throwable t) {
+				t.printStackTrace();
+
+			}
+
+			@Override
+			public void onCompleted() {
+				System.out.println("stream is completed ... received "+ count+ " location numbers");
+			}
+
+		};
+		
+		// Request
+		StreamObserver<SetLocRequest> requestObserver2 = asyncStub.setLocation(responseObserver2);
 		
 		JButton btnCalculate2 = new JButton("Send");
 		btnCalculate2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				String num3 = textNumber3.getText();
-				String num4 = textNumber4.getText();
-
-				StreamObserver<SetLocResponse> responseObserver = new StreamObserver<SetLocResponse>() {
-
-					int count =0 ;
-
-					@Override
-					public void onNext(SetLocResponse msg) {
-						System.out.println("receiving product indivisual No: " + msg.getProductIndivNo() + ", location No: "+ msg.getLocationNo() );
-						count += 1;
-					}
-
-					@Override
-					public void onError(Throwable t) {
-						t.printStackTrace();
-
-					}
-
-					@Override
-					public void onCompleted() {
-						System.out.println("stream is completed ... received "+ count+ " location numbers");
-					}
-
-				};
-
-
-
-				StreamObserver<SetLocRequest> requestObserver = asyncStub.setLocation(responseObserver);
 
 				try {
-
-					requestObserver.onNext(SetLocRequest.newBuilder().setProductNo(num3).setProductIndivNo(num4).build());
+					String num3 = textNumber3.getText();
+					String num4 = textNumber4.getText();
 					
-					// Mark the end of requests
-					requestObserver.onCompleted();
-
-					// Sleep for a bit before sending the next one.
-					Thread.sleep(new Random().nextInt(1000) + 500);
-
+					requestObserver2.onNext(SetLocRequest.newBuilder().setProductNo(num3).setProductIndivNo(num4).build());
 
 				} catch (RuntimeException e1) {
 					e1.printStackTrace();
-				} catch (InterruptedException e1) {			
-					e1.printStackTrace();
 				}
 
+				// reset the text field
+				textNumber3.setText("");
+				textNumber4.setText("");
 
-
-				try {
-					Thread.sleep(15000);
-				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
 			}
 		});
 		panel_2.add(btnCalculate2);
 		
+		// Completed button to complete the requests
+		JButton btnCalculate2_2 = new JButton("Completed");
+		btnCalculate2_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				// Mark the end of requests
+				requestObserver2.onCompleted();			
+			}
+		});
+		panel_2.add(btnCalculate2_2);
+		
+		// Text area for display the response message
 		textResponse2 = new JTextArea(3, 50);
 		textResponse2.setLineWrap(true);
 		textResponse2.setWrapStyleWord(true);
@@ -365,12 +364,13 @@ public class GUIAppS1 {
 		JLabel methodName3 = new JLabel("3. Check Location Availability");		
 		name3.add(methodName3);
 		
-		// request & response
+		// Request & Response
 		JPanel panel_3 = new JPanel();
 		frame.getContentPane().add(panel_3);
 		panel_3.setPreferredSize(new Dimension(200, 80));
 		panel_3.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
 		
+		// Request
 		JLabel lblNewLabel_5 = new JLabel("locationNo");
 		panel_3.add(lblNewLabel_5);
 		
@@ -385,8 +385,10 @@ public class GUIAppS1 {
 				
 				String num5 = textNumber5.getText();
 				
+				// Request
 				LocationAvailRequest req = LocationAvailRequest.newBuilder().setLocationNo(num5).build();
 
+				// Response
 				LocationAvailResponse response = blockingStub.checkLocationAvailability(req);
 
 				textResponse3.append("Request Location No: "+ req.getLocationNo() + "\nAvailability: "+ response.getAvailNum() + "\n");
