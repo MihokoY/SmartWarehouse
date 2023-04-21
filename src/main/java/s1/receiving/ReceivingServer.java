@@ -189,10 +189,11 @@ public class ReceivingServer extends ReceivingImplBase {
 					}
 				}					
 
+				// set the response value
 				ReceivedQtyResponse reply = ReceivedQtyResponse.newBuilder().setMessage(message).build();
-
 				responseObserver.onNext(reply);
 
+				//completed
 				responseObserver.onCompleted();
 
 			}

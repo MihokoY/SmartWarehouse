@@ -140,8 +140,10 @@ public class ShippingServer extends ShippingImplBase {
 								
 				//import the csv file
 				BufferedReader br = null;
+				
 				try{
 					br = new BufferedReader(new FileReader("src/main/java/ShippingList.csv"));
+					
 					String line="";
 					String[] tempArr; // using this to store each column in a line
 
@@ -177,8 +179,7 @@ public class ShippingServer extends ShippingImplBase {
 					}else {
 						//if there is difference
 						message = "The incorrect product number: " + message;
-					}
-				
+					}				
 					
 				} catch (IOException e) {
 					e.printStackTrace();
