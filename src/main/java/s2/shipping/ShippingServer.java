@@ -24,16 +24,20 @@ import s2.shipping.ShippingGrpc.ShippingImplBase;
 
 public class ShippingServer extends ShippingImplBase {
 	public static void main(String[] args) {
+		
+		// Create an instance of this class
 		ShippingServer shippingserver = new ShippingServer();
-		
+		// Get properties
 		Properties prop = shippingserver.getProperties();
-		
+		// Register jmDNS service
 		shippingserver.registerService(prop);
+		// Get port number // #.50052;
+		int port = Integer.valueOf( prop.getProperty("service2_port") );
 		
-		int port = Integer.valueOf( prop.getProperty("service2_port") );// #.50052;
-		
+		Server server;
 		try {
-			Server server = ServerBuilder.forPort(port).addService(shippingserver).build().start();
+			// Create a server on the port
+			server = ServerBuilder.forPort(port).addService(shippingserver).build().start();
 			System.out.println("Shipping Server started, listening on " + port);
 			server.awaitTermination();
 		} catch (IOException | InterruptedException e) {
@@ -89,7 +93,7 @@ public class ShippingServer extends ShippingImplBase {
 					service_description_properties);
 			jmdns.registerService(serviceInfo);
 
-			System.out.printf("registrering service with type %s and name %s \n", service_type, service_name);
+			System.out.printf("Registrering service with type %s and name %s \n", service_type, service_name);
 			
 			// Wait for a bit
 			Thread.sleep(1000);
@@ -114,18 +118,18 @@ public class ShippingServer extends ShippingImplBase {
 		
 		return new StreamObserver<ShippingQtyRequest>() {
 
-			// prepare ArrayList for received data
+			// Prepare ArrayList for received data
 			ArrayList<String> list = new ArrayList();
 			
-			// set the default reply message
+			// Set the default response value
 			String message = "";
 
 			@Override
 			public void onNext(ShippingQtyRequest request) {
 
-				System.out.println("receiving shipping product: " + request.getProductNo() + ", quantity: " + request.getShippingQty() );
+				System.out.println("Receiving shipping product: " + request.getProductNo() + ", quantity: " + request.getShippingQty() );
 
-				// add received data into the list
+				// Add received request from the client into the list
 				list.add(request.getProductNo() + "," + request.getShippingQty());
 			}
 
@@ -136,48 +140,48 @@ public class ShippingServer extends ShippingImplBase {
 
 			@Override
 			public void onCompleted() {
-				System.out.printf("receiving checkShippingQuantity method complete. \n" );
+				System.out.printf("Receiving checkShippingQuantity method complete. \n" );
 								
-				//import the csv file
+				// Read the csv file
 				BufferedReader br = null;
 				
 				try{
 					br = new BufferedReader(new FileReader("src/main/java/ShippingList.csv"));
 					
 					String line="";
-					String[] tempArr; // using this to store each column in a line
+					String[] tempArr; // Use this to store each column in a line
 
-					br.readLine(); // reading first line to avoid the header
+					br.readLine(); // Read first line(header)
 
-					while((line = br.readLine()) != null){ // reading each line of file
-						tempArr = line.split(","); // each column has a comma between it
+					while((line = br.readLine()) != null){ // Read each line of file
+						tempArr = line.split(","); // Split columns by comma
 
-						// first column
+						// First column
 						String ProductNo = tempArr[0];
-						// second column
+						// Second column
 						int Quantity = Integer.parseInt(tempArr[1]);
 
-						//compare to the list of the server side
+						// Compare to the list of the server side
 						for(int i=0; i<list.size(); i++) {
-							// split the list data to productNo and quantity
+							// Split the list data to productNo and quantity
 							String[] temp = list.get(i).split(",");
 							
-							// compare the quantity where the productNos are the same
+							// Compare the quantity where the productNos are the same
 							if(temp[0].equals(ProductNo)) {
 								if(Integer.parseInt(temp[1]) != Quantity) {
-									//if the quantity is different, add the productNo into the message
+									// If the quantity is different, add the productNo into the message
 									message = message.concat(ProductNo + " ");
 								}
 							}
 						}						
 					}
 					
-					// set the message
+					// Set the message
 					if(message.equals("")) {
-						//if there is no difference
+						// If there is no difference
 						message = "The shipping quantity is correct.";
 					}else {
-						//if there is difference
+						// If there is difference
 						message = "The incorrect product number: " + message;
 					}				
 					
@@ -193,13 +197,12 @@ public class ShippingServer extends ShippingImplBase {
 					}
 				}					
 
-				// set the response value
+				// Set the response value
 				ShippingQtyResponse reply = ShippingQtyResponse.newBuilder().setMessage(message).build();
 				responseObserver.onNext(reply);
 
-				//completed
+				// Completed
 				responseObserver.onCompleted();
-
 			}
 		};
 	}
@@ -214,51 +217,52 @@ public class ShippingServer extends ShippingImplBase {
 			@Override
 			public void onNext(UpdateLocRequest ulr) {
 				
+				// Get the request from the client
 				String indivNo = ulr.getProductIndivNo();
-				System.out.println("receiving updateLocation method productIndivNo: "+ indivNo);
+				System.out.println("Receiving updateLocation method productIndivNo: "+ indivNo);
 				
-				// set the default response value(locatNo)
+				// Set the default response value
 				String locatNo =  "";
 				
-				// read the csv file
+				// Read the csv file
 				BufferedReader br = null;
 				BufferedWriter bw = null;
 				try{
 					br = new BufferedReader(new FileReader("src/main/java/LocationList.csv"));
 					bw = new BufferedWriter(new FileWriter("src/main/java/tmp_LocationList.csv"));
 					String line="";
-					String[] tempArr; // using this to store each column in a line
+					String[] tempArr; // Use this to store each column in a line
 
-					// reading first line(header) and add into the temporary file 
+					// Read first line(header) and add into the temporary file 
 					String title = br.readLine(); 
 					bw.write(title);
 					bw.newLine();
 					bw.flush();
 
-					while((line = br.readLine()) != null){ // reading each line of file
-						tempArr = line.split(","); // each column has a comma between it
+					while((line = br.readLine()) != null){ // Read each line of file
+						tempArr = line.split(","); // Split columns by comma
 
-						// first column
+						// First column
 						String productIndivNo = tempArr[0];
-						// second column
+						// Second column
 						String locationNo = tempArr[1];
 
-						// get the location No where productNos are the same
+						// Get the location No where productNo is the same
 						if(indivNo.equals(productIndivNo)) {
-							// set the locationNo
+							// Set the locationNo
 							locatNo = locationNo;
 							
-							// do not add this line into the temporary file to delete
+							// Do not add this line into the temporary file to delete
 
 						}else {
-							// add this line into the temporary file
+							// Add this line into the temporary file
 							bw.write(line);
 							bw.newLine();
 							bw.flush();
 						}
 					}
 							
-					// set the response value
+					// Set the response value
 					UpdateLocResponse reply = UpdateLocResponse.newBuilder().setLocationNo(locatNo).build();				
 					responseObserver.onNext(reply);
 				
@@ -298,9 +302,9 @@ public class ShippingServer extends ShippingImplBase {
 
 			@Override
 			public void onCompleted() {
-				System.out.println("receiving setLocation method completed. ");
+				System.out.println("Receiving setLocation method completed. ");
 				
-				//completed
+				// Completed
 				responseObserver.onCompleted();
 			}			
 		};

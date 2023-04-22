@@ -20,16 +20,20 @@ import s1.receiving.ReceivingGrpc.ReceivingImplBase;
 
 public class ReceivingServer extends ReceivingImplBase {
 	public static void main(String[] args) {
+		
+		// Create an instance of this class
 		ReceivingServer receivingserver = new ReceivingServer();
-		
+		// Get properties
 		Properties prop = receivingserver.getProperties();
-		
+		// Register jmDNS service
 		receivingserver.registerService(prop);
+		// Get port number // #.50051;
+		int port = Integer.valueOf( prop.getProperty("service1_port") );
 		
-		int port = Integer.valueOf( prop.getProperty("service1_port") );// #.50051;
-		
+		Server server;
 		try {
-			Server server = ServerBuilder.forPort(port).addService(receivingserver).build().start();
+			// Create a server on the port
+			server = ServerBuilder.forPort(port).addService(receivingserver).build().start();
 			System.out.println("Receiving Server started, listening on " + port);
 			server.awaitTermination();
 		} catch (IOException | InterruptedException e) {
@@ -85,7 +89,7 @@ public class ReceivingServer extends ReceivingImplBase {
 					service_description_properties);
 			jmdns.registerService(serviceInfo);
 
-			System.out.printf("registrering service with type %s and name %s \n", service_type, service_name);
+			System.out.printf("Registrering service with type %s and name %s \n", service_type, service_name);
 			
 			// Wait for a bit
 			Thread.sleep(1000);
@@ -110,18 +114,18 @@ public class ReceivingServer extends ReceivingImplBase {
 		
 		return new StreamObserver<ReceivedQtyRequest>() {
 
-			// prepare ArrayList for received data
+			// Prepare ArrayList for received data
 			ArrayList<String> list = new ArrayList();
 			
-			// set the default reply message
+			// Set the default response value
 			String message = "";
 
 			@Override
 			public void onNext(ReceivedQtyRequest request) {
 
-				System.out.println("receiving received product: " + request.getProductNo() + ", quantity: " + request.getReceivedQty() );
+				System.out.println("Receiving received product: " + request.getProductNo() + ", quantity: " + request.getReceivedQty() );
 
-				// add received data into the list
+				// Add received request from the client into the list
 				list.add(request.getProductNo() + "," + request.getReceivedQty());
 			}
 
@@ -132,48 +136,48 @@ public class ReceivingServer extends ReceivingImplBase {
 
 			@Override
 			public void onCompleted() {
-				System.out.printf("receiving checkReceivedQuantity method complete. \n" );
+				System.out.printf("Receiving checkReceivedQuantity method complete. \n" );
 								
-				//import the csv file
+				// Read the csv file
 				BufferedReader br = null;
 				
 				try{
 					br = new BufferedReader(new FileReader("src/main/java/ReceivedList.csv"));
 					
 					String line="";
-					String[] tempArr; // using this to store each column in a line
+					String[] tempArr; // Use this to store each column in a line
 
-					br.readLine(); // reading first line to avoid the header
+					br.readLine(); // Read first line(header)
 
-					while((line = br.readLine()) != null){ // reading each line of file
-						tempArr = line.split(","); // each column has a comma between it
+					while((line = br.readLine()) != null){ // Read each line of file
+						tempArr = line.split(","); // Split columns by comma
 
-						// first column
+						// First column
 						String ProductNo = tempArr[0];
-						// second column
+						// Second column
 						int Quantity = Integer.parseInt(tempArr[1]);
 
-						//compare to the list of the server side
+						// Compare to the list of the server side
 						for(int i=0; i<list.size(); i++) {
-							// split the list data to productNo and quantity
+							// Split the list data to productNo and quantity
 							String[] temp = list.get(i).split(",");
 							
-							// compare the quantity where the productNos are the same
+							// Compare the quantity where the productNos are the same
 							if(temp[0].equals(ProductNo)) {
 								if(Integer.parseInt(temp[1]) != Quantity) {
-									//if the quantity is different, add the productNo into the message
+									// If the quantity is different, add the productNo into the message
 									message = message.concat(ProductNo + " ");
 								}
 							}
 						}	
 					}
 					
-					// set the message
+					// Set the message
 					if(message.equals("")) {
-						//if there is no difference
+						// If there is no difference
 						message = "The received quantity is correct.";
 					}else {
-						//if there is difference
+						// If there is difference
 						message = "The incorrect product number: " + message;
 					}				
 					
@@ -189,13 +193,12 @@ public class ReceivingServer extends ReceivingImplBase {
 					}
 				}					
 
-				// set the response value
+				// Set the response value
 				ReceivedQtyResponse reply = ReceivedQtyResponse.newBuilder().setMessage(message).build();
 				responseObserver.onNext(reply);
 
-				//completed
+				// Completed
 				responseObserver.onCompleted();
-
 			}
 		};
 	}
@@ -211,14 +214,15 @@ public class ReceivingServer extends ReceivingImplBase {
 			@Override
 			public void onNext(SetLocRequest slr) {
 				
+				// Get the requests from the client
 				String prdctNo = slr.getProductNo();
 				String indivNo = slr.getProductIndivNo();
-				System.out.println("receiving setLocation method productNo: "+ prdctNo + " individualNo: "+ indivNo);
+				System.out.println("Receiving setLocation method productNo: "+ prdctNo + " individualNo: "+ indivNo);
 				
-				// set the default response value(locatNo)
+				// Set the default response value
 				String locatNo =  "";
 				
-				// read the csv file
+				// Read the csv file
 				BufferedReader br = null;
 				BufferedWriter bw = null;
 				
@@ -226,26 +230,26 @@ public class ReceivingServer extends ReceivingImplBase {
 					br = new BufferedReader(new FileReader("src/main/java/LocationAvailability.csv"));					
 					bw = new BufferedWriter(new FileWriter("src/main/java/LocationList.csv",true));
 					String line="";
-					String[] tempArr; // using this to store each column in a line
+					String[] tempArr; // Use this to store each column in a line
 
-					br.readLine(); // reading first line to avoid the header
+					br.readLine(); // Read first line(header)
 
-					while((line = br.readLine()) != null){ // reading each line of file
-						tempArr = line.split(","); // each column has a comma between it
+					while((line = br.readLine()) != null){ // Read each line of file
+						tempArr = line.split(","); // Split columns by comma
 
-						// first column
+						// First column
 						String locationNo = tempArr[0];
-						// second column
+						// Second column
 						int availableNum = Integer.parseInt(tempArr[1]);
-						// third column
+						// Third column
 						String ProductNo = tempArr[2];
 
-						// get the location No where productNos are the same and available number is greater than 0
+						// Get the location No where productNo is the same and available number is greater than 0
 						if(ProductNo.equals(prdctNo) && availableNum > 0) {
-							// set the locationNo
+							// Set the locationNo
 							locatNo = locationNo;
 							
-							// update LocationList.csv (add this product data)
+							// Update LocationList.csv (add this product data)
 							String outputLine = String.join(",",indivNo,locatNo);
 							bw.write(outputLine);
 							bw.newLine();
@@ -272,7 +276,7 @@ public class ReceivingServer extends ReceivingImplBase {
 					}
 				}
 				
-				// set the response value
+				// Set the response value
 				SetLocResponse reply = SetLocResponse.newBuilder().setLocationNo(locatNo).build();				
 				responseObserver.onNext(reply);
 			}
@@ -284,9 +288,9 @@ public class ReceivingServer extends ReceivingImplBase {
 
 			@Override
 			public void onCompleted() {
-				System.out.println("receiving setLocation method completed. ");
+				System.out.println("Receiving setLocation method completed. ");
 				
-				//completed
+				// Completed
 				responseObserver.onCompleted();
 			}			
 		};
@@ -300,31 +304,32 @@ public class ReceivingServer extends ReceivingImplBase {
 	public void checkLocationAvailability(LocationAvailRequest request,
 			StreamObserver<LocationAvailResponse> responseObserver) {
 		
-		// get the request(locationNo) from the client
+		// Get the request from the client
 		String locatNo = request.getLocationNo();
 		System.out.println("Received location No: " + locatNo);
 		
-		// set the default response value(availNum)
+		// Set the default response value
 		int availNum = 0;
 		
-		// read the csv file
+		// Read the csv file
 		BufferedReader br = null;
+		
 		try{
 			br = new BufferedReader(new FileReader("src/main/java/LocationAvailability.csv"));
 			String line="";
-			String[] tempArr; // using this to store each column in a line
+			String[] tempArr; // Use this to store each column in a line
 
-			br.readLine(); // reading first line to avoid the header
+			br.readLine(); // Read first line(header)
 
-			while((line = br.readLine()) != null){ // reading each line of file
-				tempArr = line.split(","); // each column has a comma between it
+			while((line = br.readLine()) != null){ // Read each line of file
+				tempArr = line.split(","); // Split columns by comma
 
-				// first column
+				// First column
 				String locationNo = tempArr[0];
-				// second column
+				// Second column
 				int availableNum = Integer.parseInt(tempArr[1]);
 
-				// get the available number where location No is same
+				// Get the available number where location No is the same
 				if(locationNo.equals(locatNo)) {
 					availNum = availableNum;
 				}
@@ -341,12 +346,12 @@ public class ReceivingServer extends ReceivingImplBase {
 			}
 		}
 		
-		// set the response value
+		// Set the response value
 		LocationAvailResponse reply = LocationAvailResponse.newBuilder().setAvailNum(availNum).build();
 		System.out.println("Reply availability: " + availNum);
 		responseObserver.onNext(reply);
 		
-		//completed
+		// Completed
 		responseObserver.onCompleted();		
 	}
 }
