@@ -16,7 +16,6 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private SetLocResponse() {
-    productIndivNo_ = "";
     locationNo_ = "";
   }
 
@@ -45,12 +44,6 @@ private static final long serialVersionUID = 0L;
             done = true;
             break;
           case 10: {
-            java.lang.String s = input.readStringRequireUtf8();
-
-            productIndivNo_ = s;
-            break;
-          }
-          case 18: {
             java.lang.String s = input.readStringRequireUtf8();
 
             locationNo_ = s;
@@ -88,44 +81,10 @@ private static final long serialVersionUID = 0L;
             s1.receiving.SetLocResponse.class, s1.receiving.SetLocResponse.Builder.class);
   }
 
-  public static final int PRODUCTINDIVNO_FIELD_NUMBER = 1;
-  private volatile java.lang.Object productIndivNo_;
-  /**
-   * <code>string productIndivNo = 1;</code>
-   */
-  public java.lang.String getProductIndivNo() {
-    java.lang.Object ref = productIndivNo_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      productIndivNo_ = s;
-      return s;
-    }
-  }
-  /**
-   * <code>string productIndivNo = 1;</code>
-   */
-  public com.google.protobuf.ByteString
-      getProductIndivNoBytes() {
-    java.lang.Object ref = productIndivNo_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      productIndivNo_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
-  }
-
-  public static final int LOCATIONNO_FIELD_NUMBER = 2;
+  public static final int LOCATIONNO_FIELD_NUMBER = 1;
   private volatile java.lang.Object locationNo_;
   /**
-   * <code>string locationNo = 2;</code>
+   * <code>string locationNo = 1;</code>
    */
   public java.lang.String getLocationNo() {
     java.lang.Object ref = locationNo_;
@@ -140,7 +99,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string locationNo = 2;</code>
+   * <code>string locationNo = 1;</code>
    */
   public com.google.protobuf.ByteString
       getLocationNoBytes() {
@@ -170,11 +129,8 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (!getProductIndivNoBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, productIndivNo_);
-    }
     if (!getLocationNoBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, locationNo_);
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, locationNo_);
     }
     unknownFields.writeTo(output);
   }
@@ -185,11 +141,8 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (!getProductIndivNoBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, productIndivNo_);
-    }
     if (!getLocationNoBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, locationNo_);
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, locationNo_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -207,8 +160,6 @@ private static final long serialVersionUID = 0L;
     s1.receiving.SetLocResponse other = (s1.receiving.SetLocResponse) obj;
 
     boolean result = true;
-    result = result && getProductIndivNo()
-        .equals(other.getProductIndivNo());
     result = result && getLocationNo()
         .equals(other.getLocationNo());
     result = result && unknownFields.equals(other.unknownFields);
@@ -222,8 +173,6 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + PRODUCTINDIVNO_FIELD_NUMBER;
-    hash = (53 * hash) + getProductIndivNo().hashCode();
     hash = (37 * hash) + LOCATIONNO_FIELD_NUMBER;
     hash = (53 * hash) + getLocationNo().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
@@ -359,8 +308,6 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      productIndivNo_ = "";
-
       locationNo_ = "";
 
       return this;
@@ -389,7 +336,6 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public s1.receiving.SetLocResponse buildPartial() {
       s1.receiving.SetLocResponse result = new s1.receiving.SetLocResponse(this);
-      result.productIndivNo_ = productIndivNo_;
       result.locationNo_ = locationNo_;
       onBuilt();
       return result;
@@ -439,10 +385,6 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(s1.receiving.SetLocResponse other) {
       if (other == s1.receiving.SetLocResponse.getDefaultInstance()) return this;
-      if (!other.getProductIndivNo().isEmpty()) {
-        productIndivNo_ = other.productIndivNo_;
-        onChanged();
-      }
       if (!other.getLocationNo().isEmpty()) {
         locationNo_ = other.locationNo_;
         onChanged();
@@ -476,78 +418,9 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object productIndivNo_ = "";
-    /**
-     * <code>string productIndivNo = 1;</code>
-     */
-    public java.lang.String getProductIndivNo() {
-      java.lang.Object ref = productIndivNo_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        productIndivNo_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
-    }
-    /**
-     * <code>string productIndivNo = 1;</code>
-     */
-    public com.google.protobuf.ByteString
-        getProductIndivNoBytes() {
-      java.lang.Object ref = productIndivNo_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        productIndivNo_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string productIndivNo = 1;</code>
-     */
-    public Builder setProductIndivNo(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
-      productIndivNo_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string productIndivNo = 1;</code>
-     */
-    public Builder clearProductIndivNo() {
-      
-      productIndivNo_ = getDefaultInstance().getProductIndivNo();
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string productIndivNo = 1;</code>
-     */
-    public Builder setProductIndivNoBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      productIndivNo_ = value;
-      onChanged();
-      return this;
-    }
-
     private java.lang.Object locationNo_ = "";
     /**
-     * <code>string locationNo = 2;</code>
+     * <code>string locationNo = 1;</code>
      */
     public java.lang.String getLocationNo() {
       java.lang.Object ref = locationNo_;
@@ -562,7 +435,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string locationNo = 2;</code>
+     * <code>string locationNo = 1;</code>
      */
     public com.google.protobuf.ByteString
         getLocationNoBytes() {
@@ -578,7 +451,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string locationNo = 2;</code>
+     * <code>string locationNo = 1;</code>
      */
     public Builder setLocationNo(
         java.lang.String value) {
@@ -591,7 +464,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string locationNo = 2;</code>
+     * <code>string locationNo = 1;</code>
      */
     public Builder clearLocationNo() {
       
@@ -600,7 +473,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string locationNo = 2;</code>
+     * <code>string locationNo = 1;</code>
      */
     public Builder setLocationNoBytes(
         com.google.protobuf.ByteString value) {

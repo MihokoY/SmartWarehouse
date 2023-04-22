@@ -57,19 +57,18 @@ public final class ReceivingImpl {
       "edQtyRequest\022\021\n\tproductNo\030\001 \001(\t\022\023\n\013recei" +
       "vedQty\030\002 \001(\005\"&\n\023ReceivedQtyResponse\022\017\n\007m" +
       "essage\030\001 \001(\t\":\n\rSetLocRequest\022\021\n\tproduct" +
-      "No\030\001 \001(\t\022\026\n\016productIndivNo\030\002 \001(\t\"<\n\016SetL" +
-      "ocResponse\022\026\n\016productIndivNo\030\001 \001(\t\022\022\n\nlo" +
-      "cationNo\030\002 \001(\t\"*\n\024LocationAvailRequest\022\022" +
-      "\n\nlocationNo\030\001 \001(\t\")\n\025LocationAvailRespo" +
-      "nse\022\020\n\010availNum\030\001 \001(\0052\223\002\n\tReceiving\022Z\n\025c" +
-      "heckReceivedQuantity\022\035.receiving.Receive" +
-      "dQtyRequest\032\036.receiving.ReceivedQtyRespo" +
-      "nse\"\000(\001\022H\n\013setLocation\022\030.receiving.SetLo" +
-      "cRequest\032\031.receiving.SetLocResponse\"\000(\0010" +
-      "\001\022`\n\031checkLocationAvailability\022\037.receivi" +
-      "ng.LocationAvailRequest\032 .receiving.Loca" +
-      "tionAvailResponse\"\000B\037\n\014s1.receivingB\rRec" +
-      "eivingImplP\001b\006proto3"
+      "No\030\001 \001(\t\022\026\n\016productIndivNo\030\002 \001(\t\"$\n\016SetL" +
+      "ocResponse\022\022\n\nlocationNo\030\001 \001(\t\"*\n\024Locati" +
+      "onAvailRequest\022\022\n\nlocationNo\030\001 \001(\t\")\n\025Lo" +
+      "cationAvailResponse\022\020\n\010availNum\030\001 \001(\0052\223\002" +
+      "\n\tReceiving\022Z\n\025checkReceivedQuantity\022\035.r" +
+      "eceiving.ReceivedQtyRequest\032\036.receiving." +
+      "ReceivedQtyResponse\"\000(\001\022H\n\013setLocation\022\030" +
+      ".receiving.SetLocRequest\032\031.receiving.Set" +
+      "LocResponse\"\000(\0010\001\022`\n\031checkLocationAvaila" +
+      "bility\022\037.receiving.LocationAvailRequest\032" +
+      " .receiving.LocationAvailResponse\"\000B\037\n\014s" +
+      "1.receivingB\rReceivingImplP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -106,7 +105,7 @@ public final class ReceivingImpl {
     internal_static_receiving_SetLocResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_receiving_SetLocResponse_descriptor,
-        new java.lang.String[] { "ProductIndivNo", "LocationNo", });
+        new java.lang.String[] { "LocationNo", });
     internal_static_receiving_LocationAvailRequest_descriptor =
       getDescriptor().getMessageTypes().get(4);
     internal_static_receiving_LocationAvailRequest_fieldAccessorTable = new

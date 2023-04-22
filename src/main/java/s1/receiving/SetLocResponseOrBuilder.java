@@ -8,21 +8,11 @@ public interface SetLocResponseOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string productIndivNo = 1;</code>
-   */
-  java.lang.String getProductIndivNo();
-  /**
-   * <code>string productIndivNo = 1;</code>
-   */
-  com.google.protobuf.ByteString
-      getProductIndivNoBytes();
-
-  /**
-   * <code>string locationNo = 2;</code>
+   * <code>string locationNo = 1;</code>
    */
   java.lang.String getLocationNo();
   /**
-   * <code>string locationNo = 2;</code>
+   * <code>string locationNo = 1;</code>
    */
   com.google.protobuf.ByteString
       getLocationNoBytes();

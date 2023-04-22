@@ -273,7 +273,7 @@ public class ReceivingServer extends ReceivingImplBase {
 				}
 				
 				// set the response value
-				SetLocResponse reply = SetLocResponse.newBuilder().setProductIndivNo(indivNo).setLocationNo(locatNo).build();				
+				SetLocResponse reply = SetLocResponse.newBuilder().setLocationNo(locatNo).build();				
 				responseObserver.onNext(reply);
 			}
 

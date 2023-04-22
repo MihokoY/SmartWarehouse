@@ -1,5 +1,4 @@
 C:\Users\Mihoko\eclipse-workspace\SmartWarehouse\src\main\java\s3\inventory\InventoryQtyRequestOrBuilder.java
-C:\Users\Mihoko\eclipse-workspace\SmartWarehouse\src\main\java\s1\receiving\ReceivingServer.java
 C:\Users\Mihoko\eclipse-workspace\SmartWarehouse\src\main\java\s2\shipping\ShippingQtyRequest.java
 C:\Users\Mihoko\eclipse-workspace\SmartWarehouse\src\main\java\s2\shipping\UpdateLocResponseOrBuilder.java
 C:\Users\Mihoko\eclipse-workspace\SmartWarehouse\src\main\java\s3\inventory\OrderRequestOrBuilder.java
@@ -7,11 +6,11 @@ C:\Users\Mihoko\eclipse-workspace\SmartWarehouse\src\main\java\s1\receiving\SetL
 C:\Users\Mihoko\eclipse-workspace\SmartWarehouse\src\main\java\s3\inventory\InventoryQtyRequest.java
 C:\Users\Mihoko\eclipse-workspace\SmartWarehouse\src\main\java\s2\shipping\ShippingClient.java
 C:\Users\Mihoko\eclipse-workspace\SmartWarehouse\src\main\java\s3\inventory\InventoryImpl.java
-C:\Users\Mihoko\eclipse-workspace\SmartWarehouse\src\main\java\s1\receiving\GUIAppS1.java
 C:\Users\Mihoko\eclipse-workspace\SmartWarehouse\src\main\java\s2\shipping\UpdateLocRequest.java
 C:\Users\Mihoko\eclipse-workspace\SmartWarehouse\src\main\java\s3\inventory\OrderHisResponseOrBuilder.java
 C:\Users\Mihoko\eclipse-workspace\SmartWarehouse\src\main\java\s3\inventory\InventoryGrpc.java
 C:\Users\Mihoko\eclipse-workspace\SmartWarehouse\src\main\java\s2\shipping\ShippingQtyResponse.java
+C:\Users\Mihoko\eclipse-workspace\SmartWarehouse\src\main\java\s3\inventory\GUIAppS3.java
 C:\Users\Mihoko\eclipse-workspace\SmartWarehouse\src\main\java\s2\shipping\ShippingServer.java
 C:\Users\Mihoko\eclipse-workspace\SmartWarehouse\src\main\java\s2\shipping\ShippingQtyRequestOrBuilder.java
 C:\Users\Mihoko\eclipse-workspace\SmartWarehouse\src\main\java\s3\inventory\InventoryQtyResponse.java
@@ -26,7 +25,6 @@ C:\Users\Mihoko\eclipse-workspace\SmartWarehouse\src\main\java\s3\inventory\Orde
 C:\Users\Mihoko\eclipse-workspace\SmartWarehouse\src\main\java\s1\receiving\ReceivedQtyRequestOrBuilder.java
 C:\Users\Mihoko\eclipse-workspace\SmartWarehouse\src\main\java\s1\receiving\LocationAvailResponse.java
 C:\Users\Mihoko\eclipse-workspace\SmartWarehouse\src\main\java\s2\shipping\GUIAppS2.java
-C:\Users\Mihoko\eclipse-workspace\SmartWarehouse\src\main\java\s1\receiving\ReceivingClient.java
 C:\Users\Mihoko\eclipse-workspace\SmartWarehouse\src\main\java\s3\inventory\InventoryClient.java
 C:\Users\Mihoko\eclipse-workspace\SmartWarehouse\src\main\java\s3\inventory\OrderRequest.java
 C:\Users\Mihoko\eclipse-workspace\SmartWarehouse\src\main\java\s3\inventory\OrderResponse.java

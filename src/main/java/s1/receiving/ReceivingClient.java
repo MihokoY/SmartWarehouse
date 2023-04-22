@@ -177,7 +177,7 @@ public class ReceivingClient{
 
 			@Override
 			public void onNext(SetLocResponse msg) {
-				System.out.println("receiving product indivisual No: " + msg.getProductIndivNo() + ", location No: "+ msg.getLocationNo() );
+				System.out.println("receiving location No: "+ msg.getLocationNo() );
 				count += 1;
 			}
 
