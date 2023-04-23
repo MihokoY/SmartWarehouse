@@ -13,8 +13,16 @@ import java.util.Properties;
 
 import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceInfo;
+
+import com.google.rpc.BadRequest;
+import com.google.rpc.BadRequest.FieldViolation;
+
+import io.grpc.Metadata;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
+import io.grpc.Status;
+import io.grpc.StatusException;
+import io.grpc.protobuf.ProtoUtils;
 import io.grpc.stub.StreamObserver;
 import s1.receiving.ReceivingGrpc.ReceivingImplBase;
 
@@ -306,6 +314,18 @@ public class ReceivingServer extends ReceivingImplBase {
 		
 		// Get the request from the client
 		String locatNo = request.getLocationNo();
+		
+		// Remote Error Handling
+		//if(locatNo == null) {
+		//	FieldViolation inputError = BadRequest.FieldViolation.newBuilder()
+		//								.setField("locateNo").setDescription("locateNo is null").build(); 
+		//	BadRequest badRequestError = BadRequest.newBuilder().addFieldViolations(inputError).build();
+		//	Metadata errorDetail = new Metadata();
+		//	errorDetail.put(ProtoUtils.keyForProto(badRequestError), badRequestError);
+	    //  responseObserver.onError(io.grpc.Status.INVALID_ARGUMENT.withDescription("locateNo is null")
+	  	//          .asRuntimeException(errorDetail));
+		//}
+		
 		System.out.println("Received location No: " + locatNo);
 		
 		// Set the default response value
